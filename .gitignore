@@ -1,6 +1,6 @@
 /.DS_Store
 /.vscode
-/data
 /p
+/.gitignore
 /predict
 /predict.dSYM
