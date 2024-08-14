@@ -35,11 +35,11 @@ if [ -z "$TABLE_EXISTS" ]; then
                 python3 checkOutcome.py $yday
             fi
         else
-            echo "TABLE ALREADY EXISTS"
+            python3 printGame.py $tmr
         fi
     else 
-        echo "TABLE ALREADY EXISTS"
+        python3 printGame.py $tmr
     fi
 else 
-    echo "TABLE ALREADY EXISTS"
+    python3 printGame.py $tmr
 fi
