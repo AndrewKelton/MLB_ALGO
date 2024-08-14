@@ -132,5 +132,3 @@ def decisionTree(game_id, pick, correct):
 if __name__ == "__main__":
     createOutcomeTable()
     getFinalScores()
-
-# all variables in interfaces are static and final, methods are public and abstract (COP 3330)
