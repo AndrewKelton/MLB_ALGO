@@ -4,3 +4,4 @@
 /.gitignore
 /predict
 /predict.dSYM
+/__pycache__
