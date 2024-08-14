@@ -185,7 +185,6 @@ def getGameday(date, teams):
         queryPitcher(date, home_pitcher, h_pitcher_stats)
         queryPitcher(date, away_pitcher, a_pitcher_stats)
         
-
 if __name__ == "__main__":
     date = str(sys.argv[1])
     createGamedayTable(date)

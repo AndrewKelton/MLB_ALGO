@@ -28,6 +28,7 @@ if [ -z "$TABLE_EXISTS" ]; then
             TABLE="picks_$yday"
             SQL_QUERY="SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE';"
             TABLE_EXISTS=$(sqlite3 "$DB" "$SQL_QUERY")
+            twitter_post.py $tmr
             if [ -z "$TABLE_EXISTS" ]; then
                 echo "NO DATA FROM YESTERDAY"
             else

@@ -26,5 +26,3 @@ if __name__ == "__main__":
             cO.closeDB(con, cur)
         elif con:
             con.close()
-
-            
