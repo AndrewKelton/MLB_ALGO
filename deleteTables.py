@@ -1,15 +1,27 @@
 import sqlite3
+import sys
+date = sys.argv[1]
 
 con = sqlite3.connect("data/lamp.db")
 cur = con.cursor()
 
-name = 'picks_2024-07-07'
+name = 'outcomes_'+date
+name1 = 'picks_'+date
+name2 = 'pitchers_'+date
+name3 = 'games_'+date
+name4 = 'significant_stats'
 
-cur.execute(f"DROP TABLE IF EXISTS `{'picks_2024-08-14'}`")
+
+# cur.execute(f"DROP TABLE IF EXISTS `{name4}`")
+# con.commit()
+cur.execute(f"DROP TABLE IF EXISTS `{name}`")
 con.commit()
-cur.execute(f"DROP TABLE IF EXISTS `{'pitchers_2024-08-14'}`")
+# 
+# cur.execute(f"DROP TABLE IF EXISTS `{name1}`")
+# con.commit()
+cur.execute(f"DROP TABLE IF EXISTS `{name2}`")
 con.commit()
-cur.execute(f"DROP TABLE IF EXISTS `{'games_2024-08-14'}`")
+cur.execute(f"DROP TABLE IF EXISTS `{name3}`")
 con.commit()
 
 cur.close()

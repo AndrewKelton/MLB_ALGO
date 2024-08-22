@@ -118,7 +118,7 @@ HERE
 
 '''
 
-# Decision Tree Algorithm
+# Decision Tree Algorithm (TO BE IMPLEMENTED PERHAPS IN C INSTEAD)
 def decisionTree(game_id, pick, correct):
     total = 0
     if correct == 0:

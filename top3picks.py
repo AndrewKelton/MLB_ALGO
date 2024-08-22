@@ -5,6 +5,18 @@ from collections import Counter
 import mlbstatsapi
 mlb = mlbstatsapi.Mlb()
 
+# query data in twitter picks db
+def query_top_3(date, id, name):
+    con, cur = cO.openDB()
+    cur.execute(f'''CREATE TABLE IF NOT EXISTS `twitter_picks_{date}` (
+        game_id INTEGER PRIMARY KEY,
+        pick_team TEXT NOT NULL
+    )''')
+
+    cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name))
+    con.commit()
+    cO.closeDB(con, cur)
+
 # unused
 def top_3(games):
     top3 = {}
@@ -121,13 +133,13 @@ def print_all(percents):
     print(percents)
 # # # TESTING # # # 
 
+
 if __name__ == "__main__":
     
     best_3 = get_top_p(get_all_p())
    
     result1, result2, result3 = get_3_games(best_3)
     
-
     res1 = parse_from_sql(result1)
     res2 = parse_from_sql(result2)
     res3 = parse_from_sql(result3)
@@ -159,5 +171,9 @@ if __name__ == "__main__":
         away_abbr = game.gamedata.teams.away.abbreviation
         time = game.gamedata.datetime.time + " " + game.gamedata.datetime.ampm + " " + game.gamedata.venue.timezone.tz
         games.update({all_game_ids[i]: [away_abbr, home_abbr, all_team_picks[i], all_percent_wins[i], time]})
+
+    # query picks to be tweeted
+    for i in range(len(all_game_ids)):
+        query_top_3(sys.argv[1], all_game_ids[i], all_team_picks[i])
 
     print(games)
