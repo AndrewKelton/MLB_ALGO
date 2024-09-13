@@ -1,9 +1,8 @@
 import subprocess
-import sys
-import checkOutcome as cO
+import outcome_checker.checkOutcome as cO
+from sqlite3 import IntegrityError
+import getDate as d
 from collections import Counter
-import mlbstatsapi
-mlb = mlbstatsapi.Mlb()
 
 # query data in twitter picks db
 def query_top_3(date, id, name):
@@ -13,7 +12,12 @@ def query_top_3(date, id, name):
         pick_team TEXT NOT NULL
     )''')
 
-    cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name))
+    try:
+        cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name))
+    except IntegrityError:
+        print("Values already inserted for " + date)
+        exit(1)
+
     con.commit()
     cO.closeDB(con, cur)
 
@@ -62,6 +66,7 @@ def parse_from_sql(games):
     teams_abbr = []
 
     for game in games:
+        print(game)
         game_id, percent_win, team_abbr = game
         games_id.append(game_id)
         percents_win.append(percent_win)
@@ -71,7 +76,7 @@ def parse_from_sql(games):
 
 # collect data of top 3 games (can be > 3 if there are percents that are same)
 def get_3_games(best_3):
-    table = "picks_" + sys.argv[1]
+    table = "picks_" + d.getTomorrow()
     con, cur = cO.openDB()
     query = f"SELECT * FROM `{table}` WHERE percent_win = ?"
 
@@ -92,16 +97,15 @@ def get_3_games(best_3):
     return result1, result2, result3
 
 # collect pick data from printGame file
-def get_all_p():
-    result = subprocess.run(['python3', 'printGame.py'] + sys.argv[1:], capture_output=True, text=True)
-    
+def get_all_p(i):
+    date = [d.getTomorrow()]
+    result = subprocess.run(['python3', 'printGame.py'] + date, capture_output=True, text=True)
     output = result.stdout.strip()
     res_list = output.split()
     
     res_list = res_list[6:]
 
     percents = []
-    i = 4
 
     while i < len(res_list):
         percents.append(res_list[i])
@@ -111,7 +115,12 @@ def get_all_p():
 
 # keep top 3 percents X (don't care) the rest
 def get_top_p(percents):
-    percents_fl = [float(p.strip('%')) for p in percents]
+    print(percents)
+    try:
+        percents_fl = [float(p.strip('%')) for p in percents]
+    except ValueError as e:
+        return get_top_p(get_all_p(5))
+        
     best_3 = []
 
     for percent in percents_fl:
@@ -136,10 +145,11 @@ def print_all(percents):
 
 if __name__ == "__main__":
     
-    best_3 = get_top_p(get_all_p())
+    best_3 = get_top_p(get_all_p(4))
    
     result1, result2, result3 = get_3_games(best_3)
     
+    # collect data from sql
     res1 = parse_from_sql(result1)
     res2 = parse_from_sql(result2)
     res3 = parse_from_sql(result3)
@@ -157,23 +167,15 @@ if __name__ == "__main__":
     all_game_ids = [] # game ids
     all_percent_wins = [] # percent better
     all_team_picks = [] # picked team list
+    all_diffin_percents = [] # difference in percentages list
     for pick in total_games:
-        game_ids, percent_wins, team_picks = pick
+        game_ids, percent_wins, team_picks = pick # need to add diffin_percents
         for i in range(len(game_ids)):
             all_game_ids.append(game_ids[i])
             all_percent_wins.append(percent_wins[i])
             all_team_picks.append(team_picks[i])
-    
-    games = {}
-    for i in range(len(all_game_ids)):
-        game = mlb.get_game(all_game_ids[i])
-        home_abbr = game.gamedata.teams.home.abbreviation
-        away_abbr = game.gamedata.teams.away.abbreviation
-        time = game.gamedata.datetime.time + " " + game.gamedata.datetime.ampm + " " + game.gamedata.venue.timezone.tz
-        games.update({all_game_ids[i]: [away_abbr, home_abbr, all_team_picks[i], all_percent_wins[i], time]})
+            # diffin_percents.append(diffin_percents[i])
 
     # query picks to be tweeted
     for i in range(len(all_game_ids)):
-        query_top_3(sys.argv[1], all_game_ids[i], all_team_picks[i])
-
-    print(games)
+        query_top_3(d.getTomorrow(), all_game_ids[i], all_team_picks[i])

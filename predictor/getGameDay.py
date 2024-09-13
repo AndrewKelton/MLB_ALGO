@@ -1,7 +1,6 @@
 import mlbstatsapi
-import sys
 import sqlite3
-
+import getDate as d
 mlb = mlbstatsapi.Mlb()
 
 # create gameday table in DB
@@ -126,7 +125,10 @@ def getGameday(date, teams):
     pitcher_default = 0
 
     for id in game_id:
-        game = mlb.get_game(id)
+        try:
+            game = mlb.get_game(id)
+        except TypeError:
+            continue
 
         home = game.gamedata.teams.home
         away = game.gamedata.teams.away
@@ -184,9 +186,10 @@ def getGameday(date, teams):
         queryGame(date, id, home_team, away_team, home_recW, away_recW, home_recL, away_recL, homeD, awayD, sameD, home_pitcher, away_pitcher)
         queryPitcher(date, home_pitcher, h_pitcher_stats)
         queryPitcher(date, away_pitcher, a_pitcher_stats)
-        
+
 if __name__ == "__main__":
-    date = str(sys.argv[1])
+    date = d.getTomorrow()
+    print("Getting games for " + date)
     createGamedayTable(date)
     createPitcherTable(date)
     TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']

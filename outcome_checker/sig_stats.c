@@ -303,14 +303,13 @@ int * combinePitcherStats() {
     return combined;
 }
 
-
 int main(int argc, char * argv[]) {
     sqlite3 * db;
     char * zErrMsg = 0;
     int rc;
     char sql[MAX];
     const char * data = "Callback function called";
-    rc = sqlite3_open("data/lamp.db", &db);
+    rc = sqlite3_open("../data/lamp.db", &db);
     if (rc) {
         fprintf(stderr, "Cannot open db: %s\n", sqlite3_errmsg(db));
     }

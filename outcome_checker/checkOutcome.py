@@ -1,13 +1,12 @@
 import mlbstatsapi
-import sys
 import sqlite3
+import getDate as d
 
 mlb = mlbstatsapi.Mlb()
-date = str(sys.argv[1])
 
 # Open the DB for interaction
 def openDB():
-    con = sqlite3.connect("data/lamp.db")
+    con = sqlite3.connect("../data/lamp.db")
     cur = con.cursor()
     return con, cur
 
@@ -20,7 +19,7 @@ def closeDB(con, cur):
 def createOutcomeTable():
     con, cur = openDB()
 
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS `outcomes_{date}` (
+    cur.execute(f'''CREATE TABLE IF NOT EXISTS `outcomes_{str(d.getYesterday())}` (
         game_id INTEGER PRIMARY KEY,
         team_abr TEXT NOT NULL,
         correct INTEGER
@@ -32,7 +31,7 @@ def createOutcomeTable():
 def queryOutcome(game_id, team_id, correct):
     con, cur = openDB()
 
-    cur.execute(f"INSERT INTO `outcomes_{date}` (game_id, team_abr, correct) VALUES (?, ?, ?)", (game_id, team_id, correct))
+    cur.execute(f"INSERT INTO `outcomes_{str(d.getYesterday())}` (game_id, team_abr, correct) VALUES (?, ?, ?)", (game_id, team_id, correct))
     con.commit()
     print("Outcomes have been inserted")
 
@@ -42,7 +41,7 @@ def queryOutcome(game_id, team_id, correct):
 def getPickAbr():
     con, cur = openDB()
 
-    cur.execute(f"SELECT pick_name FROM `picks_{date}`")
+    cur.execute(f"SELECT pick_name FROM `picks_{str(d.getYesterday())}`")
 
     picks_abr = []
 
@@ -57,7 +56,7 @@ def getPickAbr():
 def getGameIDs():
     con, cur = openDB()
 
-    cur.execute(f"SELECT game_id FROM `games_{date}`")
+    cur.execute(f"SELECT game_id FROM `games_{str(d.getYesterday())}`")
 
     game_ids = []
 
@@ -102,7 +101,7 @@ def getFinalScores():
 def getTeamStats(game_id):
     con, cur = openDB()
 
-    cur.execute(f"SELECT * FROM `game_{date}` WHERE id = ?", (game_id,))
+    cur.execute(f"SELECT * FROM `game_{str(d.getYesterday())}` WHERE id = ?", (game_id,))
     row = cur.fetchone()
 
     closeDB(con, cur)

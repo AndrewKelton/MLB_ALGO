@@ -1,7 +1,7 @@
 import tweepy
 import mlbstatsapi
-import checkOutcome as cO
-import sys
+import outcome_checker.checkOutcome as cO
+import getDate as d
 import sqlite3
 mlb = mlbstatsapi.Mlb()
 
@@ -64,7 +64,7 @@ def get_correct(correct, game_ids, game_ids_all):
 
 # return tweet string
 def create_tweet(game_ids, correct):
-    tweet = f"Results For {sys.argv[1]}\u2757\n\n"
+    tweet = f"Results From {d.getYesterday()}\u2757\n\n"
     for i in range(len(correct)):
         game = mlb.get_game(game_ids[i])
         if correct[i] == 0:
@@ -76,37 +76,38 @@ def create_tweet(game_ids, correct):
 
 
 if __name__ == "__main__":
-    game_ids, pick_abbrs = get_post_picks(sys.argv[1])
-    correct, game_ids_all = get_picked_outcomes(sys.argv[1])
+    date = d.getYesterday()
+    game_ids, pick_abbrs = get_post_picks(date)
+    correct, game_ids_all = get_picked_outcomes(date)
     tweet = create_tweet(game_ids, get_correct(correct, game_ids, game_ids_all))
     print(tweet)
     
 
-#     api_key = '9PpkkRCCWsuPpBmJLiBqmy0AM'
-#     api_secret_key = 'cdIj6b37biYOeMGJZ3AmvdSyWtE06EbAb67wwzoiftg6u1L3eo'
-#     access_token = '1681527848614371328-zHlMpTnsg8VyiRpB8YrssuE6vbQOT3'
-#     access_secret_token = 'nFiD0etYvODX1xqNXr1WwMDLoYdI9XgULXy8bFfROTigr'
-#     client_id = 'dGtDZXp0MjVodDBFb0hQTTk2dmU6MTpjaQ'
-#     client_secret = '0VwVjWmw-oz0JdqDSkdLfuBuK5Kc1KN1u-EuMBKRrh_W3MpUfQ'
-#     bearer_token = 'AAAAAAAAAAAAAAAAAAAAADppvQEAAAAABclQ6nuEDLooLQatIu4QLqMOxcA%3D9aZUECZIOhG2fWjuPsjKzulJvJAXtXCoKWFMuV822ghYP6bOUW'
-# 
-#     # authenticator
-#     auth = tweepy.OAuth1UserHandler(api_key, api_secret_key)
-#     auth.set_access_token (
-#         access_token,
-#         access_secret_token
-#     )
-# 
-#     # connect to new api
-#     newapi = tweepy.Client(
-#         bearer_token=bearer_token,
-#         access_token=access_token,
-#         access_token_secret=access_secret_token,
-#         consumer_key=api_key,
-#         consumer_secret=api_secret_key
-#     )
-# 
-#     # connect to old api
-#     api = tweepy.API(auth)  
-#     response = newapi.get_users_tweets(id=1681527848614371328)
-#     print(response)
+    api_key = '9PpkkRCCWsuPpBmJLiBqmy0AM'
+    api_secret_key = 'cdIj6b37biYOeMGJZ3AmvdSyWtE06EbAb67wwzoiftg6u1L3eo'
+    access_token = '1681527848614371328-zHlMpTnsg8VyiRpB8YrssuE6vbQOT3'
+    access_secret_token = 'nFiD0etYvODX1xqNXr1WwMDLoYdI9XgULXy8bFfROTigr'
+    client_id = 'dGtDZXp0MjVodDBFb0hQTTk2dmU6MTpjaQ'
+    client_secret = '0VwVjWmw-oz0JdqDSkdLfuBuK5Kc1KN1u-EuMBKRrh_W3MpUfQ'
+    bearer_token = 'AAAAAAAAAAAAAAAAAAAAADppvQEAAAAABclQ6nuEDLooLQatIu4QLqMOxcA%3D9aZUECZIOhG2fWjuPsjKzulJvJAXtXCoKWFMuV822ghYP6bOUW'
+
+    # authenticator
+    auth = tweepy.OAuth1UserHandler(api_key, api_secret_key)
+    auth.set_access_token (
+        access_token,
+        access_secret_token
+    )
+
+    # connect to new api
+    newapi = tweepy.Client(
+        bearer_token=bearer_token,
+        access_token=access_token,
+        access_token_secret=access_secret_token,
+        consumer_key=api_key,
+        consumer_secret=api_secret_key
+    )
+
+    # connect to old api
+    api = tweepy.API(auth)  
+    post_result = newapi.create_tweet(text=tweet) 
+    print(post_result,"\n")

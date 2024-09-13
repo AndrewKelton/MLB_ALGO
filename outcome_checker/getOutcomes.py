@@ -1,7 +1,6 @@
 import mlbstatsapi
-import sys
-import sqlite3
-import checkOutcome as cO
+import outcome_checker.checkOutcome as cO
+import getDate as d
 mlb = mlbstatsapi.Mlb()
 
 # get picks from algorithm
@@ -63,7 +62,7 @@ def query_outcomes(game_ids, picks, corrects, date):
 
 
 if __name__ == "__main__":
-    date = sys.argv[1]
+    date = d.getYesterday()
 
     picks, game_ids = collect_picks(date)
     game_ids_list = [i[0] for i in game_ids]

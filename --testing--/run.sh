@@ -9,26 +9,28 @@ TABLE="games_$tmr"
 SQL_QUERY="SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE';"
 TABLE_EXISTS=$(sqlite3 "$DB" "$SQL_QUERY")
 
-if [ -z "$TABLE_EXISTS" ]; then
+# if [ -z "$TABLE_EXISTS" ]; then
     python3 getGameDay.py $tmr
 
-    TABLE="picks_$tday"
+    TABLE="games_$tmr"
     SQL_QUERY="SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE';"
     TABLE_EXISTS=$(sqlite3 "$DB" "$SQL_QUERY")
 
-    if [ -z "$TABLE_EXISTS" ]; then
+    # if [ -z "$TABLE_EXISTS" ]; then
         gcc -o p predict.c -lsqlite3
         ./p $tmr
+        rm p
 
-        TABLE="outcomes_$yday"
+        TABLE="picks_$yday"
         SQL_QUERY="SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE';"
         TABLE_EXISTS=$(sqlite3 "$DB" "$SQL_QUERY")
 
-        if [ -z "$TABLE_EXISTS" ]; then
+        # if [ -z "$TABLE_EXISTS" ]; then
             TABLE="picks_$yday"
             SQL_QUERY="SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE';"
             TABLE_EXISTS=$(sqlite3 "$DB" "$SQL_QUERY")
             python3 twitter_post.py $tmr
+            python3 twitter_post_results.py $yday
 
             # git checkout -b my_working_branch
             # git add data
@@ -43,15 +45,16 @@ if [ -z "$TABLE_EXISTS" ]; then
                 echo "Checking yesterday's outcomes"
                 python3 getOutcomes.py $yday
                 
-                gcc -o s sig_stats.c -lsqlite3
-                ./s $yday
+                # gcc -o s sig_stats.c -lsqlite3
+                # ./s $yday
+                # rm s
             fi
-        else
-            python3 printGame.py $tmr
-        fi
-    else 
-        python3 printGame.py $tmr
-    fi
-else 
-    python3 printGame.py $tmr
-fi
+        # else
+#             python3 printGame.py $tmr
+#         fi
+#     else 
+#         python3 printGame.py $tmr
+#     fi
+# else 
+#     python3 printGame.py $tmr
+# fi
