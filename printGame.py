@@ -1,21 +1,24 @@
 import sqlite3
 import mlbstatsapi
 import sys
-import checkOutcome as cO
 mlb = mlbstatsapi.Mlb()
 
 if __name__ == "__main__":
     date = str(sys.argv[1])
     
     try:
-        con, cur = cO.openDB()
+        con = sqlite3.connect("data/lamp.db")
+        cur = con.cursor()
         cur.execute(f"SELECT * FROM `picks_{date}`")
         rows = cur.fetchall()
 
         print("AWAY @ HOME | PICK PERCENT")
         for row in rows:
             game_id, percent, pick = row
-            game = mlb.get_game(game_id)
+            try:
+                game = mlb.get_game(game_id)
+            except TypeError:
+                continue
 
             print(game.gamedata.teams.away.abbreviation + " @ " + game.gamedata.teams.home.abbreviation + "\t" + pick, str(percent) + "%")
 
@@ -23,6 +26,7 @@ if __name__ == "__main__":
         print(f"Error occured: {e}")
     finally:
         if con and cur:
-            cO.closeDB(con, cur)
+            cur.close()
+            con.close()
         elif con:
             con.close()
