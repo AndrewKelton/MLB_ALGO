@@ -20,9 +20,9 @@ def query_top_3(date, id, name):
             raise ExceptionsMLB.TableExists()
 
     except ExceptionsMLB.TableExists as e:
-        print(e, file=stderr)
+        print(e, file=sys.stderr)
     except sqlite3.Error as e:
-        print(e, file=stderr)
+        print(e, file=sys.stderr)
 
     try:
         cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name)) 

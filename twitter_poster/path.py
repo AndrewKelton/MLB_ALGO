@@ -17,12 +17,15 @@ sys.path.append(os.path.abspath(os.path.join(current_dir, '..')))
 from runner import *
 from outcome_checker import checkOutcome as cO
 
+# could just use variables but I like keeping
+# all of the same data in an object, keeps it
+# more organized
 class ApiKeys():
-    api_key = ''
-    api_secret_key = ''
-    access_token = ''
-    access_secret_token = ''
-    client_id = ''
-    client_secret = ''
-    bearer_token = ''
+    api_key = '9PpkkRCCWsuPpBmJLiBqmy0AM'
+    api_secret_key = 'cdIj6b37biYOeMGJZ3AmvdSyWtE06EbAb67wwzoiftg6u1L3eo'
+    access_token = '1681527848614371328-zHlMpTnsg8VyiRpB8YrssuE6vbQOT3'
+    access_secret_token = 'nFiD0etYvODX1xqNXr1WwMDLoYdI9XgULXy8bFfROTigr'
+    client_id = 'dGtDZXp0MjVodDBFb0hQTTk2dmU6MTpjaQ'
+    client_secret = '0VwVjWmw-oz0JdqDSkdLfuBuK5Kc1KN1u-EuMBKRrh_W3MpUfQ'
+    bearer_token = 'AAAAAAAAAAAAAAAAAAAAADppvQEAAAAABclQ6nuEDLooLQatIu4QLqMOxcA%3D9aZUECZIOhG2fWjuPsjKzulJvJAXtXCoKWFMuV822ghYP6bOUW'
     pass

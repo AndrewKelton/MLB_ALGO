@@ -35,11 +35,43 @@ def collect_picks(date):
 # get actual outcome of game
 def collect_outcomes(game_ids, picks):
     wins = []
+    leng = len(game_ids)
+    i = -1
 
-    for i in range(len(game_ids)):
+    while i < leng:
+        i+=1
+        print(f'i: {i}\tleng: {leng}')
+        # try:
         game = mlb.get_game(game_ids[i])
+#         except TypeError:
+#             del game_ids[i]
+#             del picks[i]
+# 
+#             i-=1
+#             leng-=1
+# 
+#             continue
+
+        # try:
         home_score = game.livedata.linescore.teams.home.runs
+#         except AttributeError:
+#             del game_ids[i]
+#             del picks[i]
+#             i-=1
+#             leng-=1
+# 
+#             continue
+
+        # try:
         away_score = game.livedata.linescore.teams.away.runs
+#         except AttributeError:
+#             del game_ids[i]
+#             del picks[i]
+#             i-=1
+#             leng-=1
+# 
+#             continue
+
         home_win = home_score > away_score
         away_win = home_score < away_score
 
@@ -51,6 +83,8 @@ def collect_outcomes(game_ids, picks):
             wins.append(1)
         elif away_win and game.gamedata.teams.home.abbreviation == picks[i]:
             wins.append(0)
+
+
     return wins
 
 # query outcomes into db
@@ -81,7 +115,10 @@ def query_outcomes(game_ids, picks, corrects, date):
         cO.closeDB(con, cur)
 
 if __name__ == "__main__":
-    date = d.getYesterday()
+    if len(sys.argv) > 1: 
+        date = sys.argv[1]
+    else:
+        date = d.getYesterday()
 
     picks, game_ids = collect_picks(date)
     game_ids_list = [i[0] for i in game_ids]

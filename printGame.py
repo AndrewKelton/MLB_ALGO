@@ -11,8 +11,18 @@ if __name__ == "__main__":
         cur = con.cursor()
         cur.execute(f"SELECT * FROM `picks_{date}`")
         rows = cur.fetchall()
+        row_count = cur.fetchone()[0]
+
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+
+    except ExceptionsMLB.TableExists as e:
+        print(e, file=sys.stderr)
+    except sqlite3.Error as e:
+        print(e, file=sys.stderr)
 
         print("AWAY @ HOME | PICK PERCENT")
+
         for row in rows:
             game_id, percent, pick = row
             try:
