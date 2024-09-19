@@ -37,7 +37,6 @@ typedef struct Outcome {
     Game * game;
     char * pickname;
     int correct;
-    // MostSigStat * mss;
 } Outcome;
 
 Game game[20];
@@ -65,6 +64,7 @@ int isHome(Outcome o) {
     return 0;
 }
 
+// find most significant stat from all games
 int overallMSS(int arr[], int size) {
     int mss = 0;
     for (int i = 1; i < size; i++) {
@@ -309,7 +309,8 @@ int main(int argc, char * argv[]) {
     int rc;
     char sql[MAX];
     const char * data = "Callback function called";
-    rc = sqlite3_open("../data/lamp.db", &db);
+    
+    rc = sqlite3_open("data/lamp.db", &db);
     if (rc) {
         fprintf(stderr, "Cannot open db: %s\n", sqlite3_errmsg(db));
     }

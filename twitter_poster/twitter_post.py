@@ -1,8 +1,6 @@
 import tweepy
-import subprocess
-import outcome_checker.checkOutcome as cO
-import mlbstatsapi
-import getDate as d
+from path import *
+
 mlb = mlbstatsapi.Mlb()
 
 # collect top 3 picks from sql
@@ -43,13 +41,10 @@ def create_tweet(games):
 
 
 if __name__ == "__main__":
+
     # query top picks for posting
     date = d.getTomorrow()
     dlist = [date]
-    try:
-        subprocess.run(['python3', 'top3picks.py'] + dlist, capture_output=False, text=True)
-    except Exception as e:
-        print(f"Error: {e}")
 
     game_ids, picks = get_top3_sql(date) # collect query
 
@@ -60,13 +55,13 @@ if __name__ == "__main__":
 
     tweet = create_tweet(games) 
         
-    api_key = 
-    api_secret_key = 
-    access_token = 
-    access_secret_token = 
-    client_id = 
-    client_secret = 
-    bearer_token = 
+    api_key = '9PpkkRCCWsuPpBmJLiBqmy0AM'
+    api_secret_key = 'cdIj6b37biYOeMGJZ3AmvdSyWtE06EbAb67wwzoiftg6u1L3eo'
+    access_token = '1681527848614371328-zHlMpTnsg8VyiRpB8YrssuE6vbQOT3'
+    access_secret_token = 'nFiD0etYvODX1xqNXr1WwMDLoYdI9XgULXy8bFfROTigr'
+    client_id = 'dGtDZXp0MjVodDBFb0hQTTk2dmU6MTpjaQ'
+    client_secret = '0VwVjWmw-oz0JdqDSkdLfuBuK5Kc1KN1u-EuMBKRrh_W3MpUfQ'
+    bearer_token = 'AAAAAAAAAAAAAAAAAAAAADppvQEAAAAABclQ6nuEDLooLQatIu4QLqMOxcA%3D9aZUECZIOhG2fWjuPsjKzulJvJAXtXCoKWFMuV822ghYP6bOUW'
 
     # authenticator
     auth = tweepy.OAuth1UserHandler(api_key, api_secret_key)

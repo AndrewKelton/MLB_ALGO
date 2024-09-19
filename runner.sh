@@ -19,7 +19,9 @@ tday=$(date +%F)
 # ./s $yday
 # rm s
 
+
 python3 outcome_checker/getOutcomes.py
+
 python3 twitter_poster/twitter_post_results.py
 gcc -o s outcome_checker/sig_stats.c -lsqlite3
 ./s $yday
@@ -28,7 +30,8 @@ rm s
 python3 predictor/getGameDay.py
 
 gcc -o p predictor/predict.c -lsqlite3
-./p $tday
+./p $tmr
 rm p
 
+python3 twitter_poster/top3picks.py
 python3 twitter_poster/twitter_post.py

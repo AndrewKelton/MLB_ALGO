@@ -874,6 +874,34 @@ void createPicksTable(sqlite3 * db, const char * tableName) {
     }
 }
 
+// check table is already in sql db
+_Bool table_exists(sqlite3 *db, const char *table_name) {
+    sqlite3_stmt *stmt;
+    const char *query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?;";
+    _Bool exists = 0;
+
+    // Prepare the SQL statement
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        return 0;
+    }
+
+    // Bind the table name to the SQL statement
+    if (sqlite3_bind_text(stmt, 1, table_name, -1, SQLITE_STATIC) != SQLITE_OK) {
+        fprintf(stderr, "Failed to bind table name: %s\n", sqlite3_errmsg(db));
+        sqlite3_finalize(stmt);
+        return 0;
+    }
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        exists = 1;  // Table exists
+    }
+
+    sqlite3_finalize(stmt);
+
+    return exists;
+}
+
 
 int main(int argc, char * argv[]) {
     sqlite3 * db;
@@ -882,11 +910,19 @@ int main(int argc, char * argv[]) {
     char sql[MAX];
     const char * data = "Callback function called";
 
-    rc = sqlite3_open("../data/lamp.db", &db); // open database
+
+    rc = sqlite3_open("data/lamp.db", &db); // open database
     if (rc) {
-        fprintf(stderr, "Cannot open db: %s\n", sqlite3_errmsg(db));
+        fprintf(stderr, "%s\n", sqlite3_errmsg(db));
     }
 
+    // check if table already exists, if does exit program
+    char table[MAX] = "picks_";
+    strcat(table, argv[1]);
+    if (table_exists(db, table)) {
+        fprintf(stderr, "Table Exists");
+        exit(0);
+    }
 
     /* START GAME TABLE SEARCH */
     char gamesTable[MAX] = "games_";

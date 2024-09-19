@@ -1,10 +1,10 @@
 import sqlite3
 import mlbstatsapi
-import sys
+import getDate as d
 mlb = mlbstatsapi.Mlb()
 
 if __name__ == "__main__":
-    date = str(sys.argv[1])
+    date = d.getTomorrow()
     
     try:
         con = sqlite3.connect("data/lamp.db")

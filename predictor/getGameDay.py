@@ -1,72 +1,85 @@
-import mlbstatsapi
-import sqlite3
-import getDate as d
+from path import *
+
 mlb = mlbstatsapi.Mlb()
 
 # create gameday table in DB
 def createGamedayTable(date):
-    con = sqlite3.connect("data/lamp.db")
-    cur = con.cursor()
+    con, cur = cO.openDB()
+    table_name = f"games_{date}"
 
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS `games_{date}` (
-        game_id INTEGER PRIMARY KEY,
-        home_team TEXT NOT NULL,
-        away_team TEXT NOT NULL,
-        home_wins INTEGER,
-        away_wins INTEGER,
-        home_loss INTEGER,
-        away_loss INTEGER,
-        home_div_leader INTEGER,
-        away_div_leader INTEGER,
-        same_div INTEGER,
-        home_pitcher_id INTEGER,
-        away_pitcher_id INTEGER
-    )''')
+    try:
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS `games_{date}` (
+            game_id INTEGER PRIMARY KEY,
+            home_team TEXT NOT NULL,
+            away_team TEXT NOT NULL,
+            home_wins INTEGER,
+            away_wins INTEGER,
+            home_loss INTEGER,
+            away_loss INTEGER,
+            home_div_leader INTEGER,
+            away_div_leader INTEGER,
+            same_div INTEGER,
+            home_pitcher_id INTEGER,
+            away_pitcher_id INTEGER
+        )''')
 
-    cur.close()
-    con.close()
+        cur.execute(f"SELECT COUNT(*) FROM `{table_name}`")
+        row_count = cur.fetchone()[0]
+
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+    except ExceptionsMLB.TableExists as e:
+        print(e, file=sys.stderr)
+    finally:
+        cO.closeDB(con, cur)
 
 # create pitcher table in DB
 def createPitcherTable(date):
-    con = sqlite3.connect("data/lamp.db")
-    cur = con.cursor()
+    con, cur = cO.openDB()
 
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS `pitchers_{date}` (
-        pitcher_id INTEGER PRIMARY KEY,
-        wins INTEGER,
-        losses INTEGER,
-        era REAL,
-        inningspitched REAL,
-        strikeouts INTEGER,
-        baseonballs REAL,
-        hits INTEGER,
-        homeruns INTEGER
-    )''')
-    cur.close()
-    con.close()
+    table_name = f"pitchers_{date}"
+
+    try:
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS `pitchers_{date}` (
+            pitcher_id INTEGER PRIMARY KEY,
+            wins INTEGER,
+            losses INTEGER,
+            era REAL,
+            inningspitched REAL,
+            strikeouts INTEGER,
+            baseonballs REAL,
+            hits INTEGER,
+            homeruns INTEGER
+        )''')
+
+        cur.execute(f"SELECT COUNT(*) FROM `{table_name}`")
+        row_count = cur.fetchone()[0]
+
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+    except ExceptionsMLB.TableExists as e:
+        print(e, file=sys.stderr)
+    finally:
+        cO.closeDB(con, cur)
 
 # insert game
 def queryGame(date, game_id, home, away, hw, aw, hl, al, hdv, adv, sd, h_pitcherID, a_pitcherID):
-    con = sqlite3.connect("data/lamp.db")
-    cur = con.cursor()
+    con, cur = cO.openDB()
 
     cur.execute(f"INSERT INTO `games_{date}` (game_id, home_team, away_team, home_wins, away_wins, home_loss, away_loss, home_div_leader, away_div_leader, same_div, home_pitcher_id, away_pitcher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (game_id, home, away, hw, aw, hl, al, hdv, adv, sd, h_pitcherID, a_pitcherID))
     con.commit()
     # print("Games inserted into DB")
 
-    cur.close()
-    con.close()
+    cO.closeDB(con, cur)
 
 # insert pitcher
 def queryPitcher(date, pitcherID, p_stats):
-    con = sqlite3.connect("data/lamp.db")
-    cur = con.cursor()
+    con, cur = cO.openDB()
 
     cur.execute(f"INSERT INTO `pitchers_{date}` (pitcher_id, wins, losses, era, inningspitched, strikeouts, baseonballs, hits, homeruns) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (pitcherID, p_stats[0], p_stats[1], p_stats[2], p_stats[3], p_stats[4], p_stats[5], p_stats[6], p_stats[7]))
     con.commit()
 
-    cur.close()
-    con.close()
+    cO.closeDB(con, cur)
 
 # get pitcher stats from api
 def get_pitcher_stats(player_id):
@@ -189,8 +202,12 @@ def getGameday(date, teams):
 
 if __name__ == "__main__":
     date = d.getTomorrow()
-    print("Getting games for " + date)
+
     createGamedayTable(date)
     createPitcherTable(date)
+
+    print("Getting games for " + date)
+
     TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']
+
     getGameday(date, TEAMS)

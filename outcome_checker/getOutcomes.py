@@ -1,6 +1,4 @@
-import mlbstatsapi
-import outcome_checker.checkOutcome as cO
-import getDate as d
+from path import *
 mlb = mlbstatsapi.Mlb()
 
 # get picks from algorithm
@@ -48,18 +46,28 @@ def collect_outcomes(game_ids, picks):
 def query_outcomes(game_ids, picks, corrects, date):
     con, cur = cO.openDB()
 
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS `outcomes_{date}` (
-        game_id INTEGER PRIMARY KEY,
-        team_abbr TEXT NOT NULL,
-        correct INTEGER
-    )''')
+    table_name = f"outcomes_{date}"
 
-    for i in range(len(game_ids)):
-        cur.execute(f"INSERT INTO `outcomes_{date}` (game_id, team_abbr, correct) VALUES (?, ?, ?)", (game_ids[i], picks[i], corrects[i]))
-        con.commit()
+    try:
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS `outcomes_{date}` (
+            game_id INTEGER PRIMARY KEY,
+            team_abbr TEXT NOT NULL,
+            correct INTEGER
+        )''')
 
-    cO.closeDB(con, cur)
+        cur.execute(f"SELECT COUNT(*) FROM `{table_name}`")
+        row_count = cur.fetchone()[0]
 
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+
+        for i in range(len(game_ids)):
+            cur.execute(f"INSERT INTO `outcomes_{date}` (game_id, team_abbr, correct) VALUES (?, ?, ?)", (game_ids[i], picks[i], corrects[i]))
+            con.commit()
+    except (ExceptionsMLB.TableExists) as e:
+        print(e, file=sys.stderr)
+    finally:
+        cO.closeDB(con, cur)
 
 if __name__ == "__main__":
     date = d.getYesterday()

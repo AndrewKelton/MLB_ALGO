@@ -1,12 +1,9 @@
-import mlbstatsapi
-import sqlite3
-import getDate as d
-
+from path import *
 mlb = mlbstatsapi.Mlb()
 
 # Open the DB for interaction
 def openDB():
-    con = sqlite3.connect("../data/lamp.db")
+    con = sqlite3.connect("data/lamp.db")
     cur = con.cursor()
     return con, cur
 

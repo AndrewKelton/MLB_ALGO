@@ -1,25 +1,36 @@
-import subprocess
-import outcome_checker.checkOutcome as cO
+# import subprocess
 from sqlite3 import IntegrityError
-import getDate as d
 from collections import Counter
+from path import *
+
 
 # query data in twitter picks db
 def query_top_3(date, id, name):
     con, cur = cO.openDB()
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS `twitter_picks_{date}` (
-        game_id INTEGER PRIMARY KEY,
-        pick_team TEXT NOT NULL
-    )''')
+    try:
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS `twitter_picks_{date}` (
+            game_id INTEGER PRIMARY KEY,
+            pick_team TEXT NOT NULL
+        )''')
+
+        cur.execute(f"SELECT COUNT(*) FROM `twitter_picks_{date}`")
+        row_count = cur.fetchone()[0]
+
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+
+    except ExceptionsMLB.TableExists as e:
+        print(e, file=stderr)
+    except sqlite3.Error as e:
+        print(e, file=stderr)
 
     try:
-        cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name))
+        cur.execute(f"INSERT INTO `twitter_picks_{date}` (game_id, pick_team) VALUES (?,?)", (id, name)) 
+        con.commit()
     except IntegrityError:
         print("Values already inserted for " + date)
-        exit(1)
-
-    con.commit()
-    cO.closeDB(con, cur)
+    finally:
+        cO.closeDB(con, cur)
 
 # unused
 def top_3(games):
