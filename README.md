@@ -202,8 +202,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
+Twitter - [@ml_BETS](https://x.com/ml_BETS_)
+LinkedIn - [https://www.linkedin.com/in/andrew-kelton/](https://www.linkedin.com/in/andrew-kelton/)
 Project Link: [https://github.com/AndrewKelton/MLB_ALGO](https://github.com/AndrewKelton/MLB_ALGO)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
