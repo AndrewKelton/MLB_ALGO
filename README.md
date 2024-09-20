@@ -87,6 +87,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
+* <img src="img_src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg" alt="Logo" width="80" height="80">
 * [![Python3][Python3-shield]][Python3-url]
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
