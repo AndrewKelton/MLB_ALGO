@@ -1,6 +1,7 @@
 import tweepy
 from path import *
 
+keys = ApiKeys()
 mlb = mlbstatsapi.Mlb()
 
 # collect picks stored in twitter picks table
@@ -81,28 +82,27 @@ if __name__ == "__main__":
     print(tweet)
     
 
-    api_key = ''
-    api_secret_key = ''
-    access_token = ''
-    access_secret_token = ''
-    client_id = ''
-    client_secret = ''
-    bearer_token = ''
+    auth = tweepy.OAuth1UserHandler(keys.api_key, keys.api_secret_key)
+    auth.set_access_token (
+        keys.access_token,
+        keys.access_secret_token
+    )
 
     # authenticator
-    auth = tweepy.OAuth1UserHandler(api_key, api_secret_key)
+    auth = tweepy.OAuth1UserHandler(keys.api_key, keys.api_secret_key)
     auth.set_access_token (
-        access_token,
-        access_secret_token
+        keys.access_token,
+        keys.access_secret_token
     )
+
 
     # connect to new api
     newapi = tweepy.Client(
-        bearer_token=bearer_token,
-        access_token=access_token,
-        access_token_secret=access_secret_token,
-        consumer_key=api_key,
-        consumer_secret=api_secret_key
+        bearer_token=keys.bearer_token,
+        access_token=keys.access_token,
+        access_token_secret=keys.access_secret_token,
+        consumer_key=keys.api_key,
+        consumer_secret=keys.api_secret_key
     )
 
     # connect to old api

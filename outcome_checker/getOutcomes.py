@@ -4,22 +4,33 @@ mlb = mlbstatsapi.Mlb()
 # get picks from algorithm
 def collect_picks(date):
     con, cur = cO.openDB()
-    cur.execute(f'SELECT pick_name FROM `picks_{date}`')
 
-    pick_abbrs = []
-    rows = cur.fetchall()
-    for row in rows:
-        pick_abbrs.append(row)
+    try:
+        try:
+            cur.execute(f'SELECT pick_name FROM `picks_{date}`')
 
-    cur.execute(f'SELECT game_id FROM `picks_{date}`')
+            pick_abbrs = []
+            rows = cur.fetchall()
+            for row in rows:
+                pick_abbrs.append(row)
 
-    game_ids = []
-    rows = cur.fetchall()
-    for row in rows:
-        game_ids.append(row)
+            cur.execute(f'SELECT game_id FROM `picks_{date}`')
 
-    cO.closeDB(con, cur)
-    return pick_abbrs, game_ids
+            game_ids = []
+            rows = cur.fetchall()
+            for row in rows:
+                game_ids.append(row)
+
+            return pick_abbrs, game_ids
+
+        except sqlite3.OperationalError:
+            raise ExceptionsMLB.TableNotExists()
+        finally:
+            cO.closeDB(con, cur)
+    except ExceptionsMLB.TableNotExists as e:
+        print(e, file=sys.stderr)
+        exit(0)
+
 
 # get actual outcome of game
 def collect_outcomes(game_ids, picks):

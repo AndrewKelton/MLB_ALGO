@@ -178,7 +178,7 @@ double factorial(int i) {
     return (double) i * factorial(i-1);
 }
 
-/* THIS IS COUNTING FORMULA MESSED UP (NEVER USED) */
+/* THIS IS COUNTING FORMULA (NEVER USED) */
 double counting(int n, int b) {
     return factorial(n) / (factorial(b) * factorial(n-b));
 }
@@ -379,9 +379,6 @@ void compTeamStats(Game g) {
     else if (!g.home->isDivLeader && g.away->isDivLeader) a++;
         if (g.sameDiv) a++;
     else if (g.home->isDivLeader && g.away->isDivLeader) both++, a++, h++;
-
-    // printf("\ncompTeamStats\n");
-    // printf("a = %d, h = %d, both = %d, \n", a, h, both);
 }
 
 
@@ -423,7 +420,6 @@ int * gamedayMssP() {
 // decode most significant stat(s) from gamedayMssP
 void decodeGamedayP(Pitcher hP, Pitcher aP) {
     int * arr = gamedayMssP();
-    // printf("\ndecodeGamedayP\n");
     
     for (int i = 0; i < ((int) sizeof(arr)) / 4; i++) {
         // if (arr[i] == 0) {
@@ -510,7 +506,6 @@ void decodeGamedayP(Pitcher hP, Pitcher aP) {
                 else both++, a++, h++;
                 break;
         }
-        // printf("a = %d, h = %d, both = %d\n", a, h, both);
     }
     if ((int) sizeof(arr) > 4) count++;
 }
@@ -672,9 +667,6 @@ void compPitcherStats(Pitcher homeP, Pitcher awayP) {
     if (homeP.wins > awayP.wins) h++;
     else if (homeP.wins < awayP.wins) a++;
     else both++, a++, h++;
-
-    // printf("\ncompPitcherStats\n");
-    // printf("a = %d, h = %d, both = %d, \n", a, h, both);
 }
 
 // insert data into picks table

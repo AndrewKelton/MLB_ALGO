@@ -1,7 +1,9 @@
 import tweepy
 from path import *
 
+keys = ApiKeys()
 mlb = mlbstatsapi.Mlb()
+
 
 # collect top 3 picks from sql
 def get_top3_sql(date):
@@ -10,6 +12,18 @@ def get_top3_sql(date):
     query = f"SELECT * FROM `twitter_picks_{str(date)}`"
     cur.execute(query)
     res = cur.fetchall()
+    print(res)
+
+    # only one team picked
+    if len(res) == 1:
+        id = []
+        pick = []
+        id_res, pick_res = res[0]
+
+        id.append(id_res)
+        pick.append(pick_res)
+
+        return id, pick
 
     ids = []
     picks = []
@@ -50,33 +64,27 @@ if __name__ == "__main__":
 
     # create dictionary of game info
     games = {}
-    for i in range(3):
+
+    for i in range(min(3, len(game_ids))):
         games.update(get_game_info(game_ids[i], picks[i]))
 
     tweet = create_tweet(games) 
         
-    api_key = ''
-    api_secret_key = ''
-    access_token = ''
-    access_secret_token = ''
-    client_id = ''
-    client_secret = ''
-    bearer_token = ''
 
     # authenticator
-    auth = tweepy.OAuth1UserHandler(api_key, api_secret_key)
+    auth = tweepy.OAuth1UserHandler(keys.api_key, keys.api_secret_key)
     auth.set_access_token (
-        access_token,
-        access_secret_token
+        keys.access_token,
+        keys.access_secret_token
     )
 
     # connect to new api
     newapi = tweepy.Client(
-        bearer_token=bearer_token,
-        access_token=access_token,
-        access_token_secret=access_secret_token,
-        consumer_key=api_key,
-        consumer_secret=api_secret_key
+        bearer_token=keys.bearer_token,
+        access_token=keys.access_token,
+        access_token_secret=keys.access_secret_token,
+        consumer_key=keys.api_key,
+        consumer_secret=keys.api_secret_key
     )
 
     # connect to old api
