@@ -26,8 +26,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="[https://github.com/AndrewKelton/MLB_ALGO.com](https://github.com/AndrewKelton/MLB_ALGO)">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/AndrewKelton/MLB_ALGO">
+    <img src="src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">MLB ALGO</h3>
