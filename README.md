@@ -87,6 +87,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
+* [![Python3][Python3-shield]][Python3-url]
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
@@ -201,6 +202,8 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/andrew-kelton/
 [product-screenshot]: images/screenshot.png
+[Python3-shield]: https://github.com/AndrewKelton/MLB_ALGO/img_src/Python-logo-notext.svg.png
+[Python3-url]: https://docs.python.org/3/
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
