@@ -1,4 +1,4 @@
-# module holding specific exceptions
+# module holding specific MLB exceptions 
 
 
 class ExceptionsMLB(Exception):
