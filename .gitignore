@@ -3,6 +3,9 @@
 /p
 /s
 /.gitignore
+/node_modules
+/*.tmp
+/*.log
 /predict
 /predict.dSYM
 /__pycache__
