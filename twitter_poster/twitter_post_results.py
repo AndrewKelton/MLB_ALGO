@@ -75,7 +75,10 @@ def create_tweet(game_ids, correct):
 
 
 if __name__ == "__main__":
-    date = d.getYesterday()
+    if len(sys.argv) > 1:
+        date = sys.argv[1]
+    else:
+        date = d.getYesterday()
     game_ids, pick_abbrs = get_post_picks(date)
     correct, game_ids_all = get_picked_outcomes(date)
     tweet = create_tweet(game_ids, get_correct(correct, game_ids, game_ids_all))

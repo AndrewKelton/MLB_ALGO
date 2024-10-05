@@ -157,18 +157,37 @@ def print_all(percents):
 if __name__ == "__main__":
     
     best_3 = get_top_p(get_all_p(4))
-   
-    result1, result2, result3 = get_3_games(best_3)
+    
+    results = get_3_games(best_3)
+
+    # partition the results from get_3_games func
+    if len(results) == 1:
+        result1 = results
+    elif len(results) == 2:
+        result1, result2 = results
+    elif len(results) == 3:
+        result1, result2, result3 = results
     
     # collect data from sql
-    res1 = parse_from_sql(result1)
-    res2 = parse_from_sql(result2)
-    res3 = parse_from_sql(result3)
+
+    if len(results) == 1:
+        res1 = parse_from_sql(result1)
+    elif len(results) == 2:
+        res1 = parse_from_sql(result1)
+        res2 = parse_from_sql(result2)
+    elif len(results) == 3:
+        res1 = parse_from_sql(result1)
+        res2 = parse_from_sql(result2)
+        res3 = parse_from_sql(result3)
 
     total_games = []
-    total_games.append(res1)
-    total_games.append(res2)
-    total_games.append(res3)
+    
+    if len(results) >= 1:
+        total_games.append(res1)
+    if len(results) >= 2:
+        total_games.append(res2)
+    elif len(results) >= 3:
+        total_games.append(res3)
     
     if res1 == res2:
         total_games.remove(res2)
@@ -179,13 +198,17 @@ if __name__ == "__main__":
     all_percent_wins = [] # percent better
     all_team_picks = [] # picked team list
     all_diffin_percents = [] # difference in percentages list
+
     for pick in total_games:
+
         game_ids, percent_wins, team_picks = pick # need to add diffin_percents
+
         for i in range(len(game_ids)):
             all_game_ids.append(game_ids[i])
             all_percent_wins.append(percent_wins[i])
             all_team_picks.append(team_picks[i])
-            # diffin_percents.append(diffin_percents[i])
+
+            # diffin_percents.append(diffin_percents[i]) to be added
 
     # query picks to be tweeted
     for i in range(len(all_game_ids)):

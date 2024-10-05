@@ -140,7 +140,7 @@ def getGameday(date, teams):
     for id in game_id:
         try:
             game = mlb.get_game(id)
-        except TypeError:
+        except TypeError: # TypeError means game is already in progress
             continue
 
         home = game.gamedata.teams.home
