@@ -13,6 +13,15 @@ Usage:
 
 '''
 
+'''
+        !!! IMPORTANT !!!
+
+THIS IS ONLY USED FOR COMMAND LINE USAGE!!
+app.js DOES NOT USE THIS AND NEVER WILL!!
+THERE IS NO API SUPPORT FOR THIS FILE!!
+
+'''
+
 import os
 import sys
 import shutil
