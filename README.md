@@ -32,14 +32,7 @@
 
 <h3 align="center">MLB ALGO</h3>
   <p align="center">
-    MLB_ALGO is a machine learning-based predictor for Major League Baseball (MLB) games. The project integrates multiple technologies to provide a comprehensive prediction system:
-    <ul align="left">
-      <li>Machine Learning in C: The core predictive model is written in C, optimized for speed and accuracy.</li>
-      <li>Flask API: The backend, built with Flask in Python, exposes API endpoints that serve game data and predictions to the frontend.</li>
-      <li>ReactJS Frontend: A modern and dynamic ReactJS frontend interacts with the Flask API, allowing users to view game predictions in real-time.</li>
-      <li>Twitter Integration with Tweepy: Automatically posts the top picks for the day to Twitter using Tweepy in Python.</li>
-      <li>MLBStatsAPI: Team data is collected using the mlbstatsapi to provide up-to-date information for predictions.</li>
-    </ul>
+    MLB_ALGO is a machine learning-based predictor for Major League Baseball (MLB) games. 
     <br />
     <a href="https://github.com/AndrewKelton/MLB_ALGO.git"><strong>Explore the docs »</strong></a>
     <br />
@@ -84,8 +77,14 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `AndrewKelton`, `MLB_ALGO`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+<p>The project integrates multiple technologies to provide a comprehensive prediction system:</p>
+    <ul align="left">
+      <li>Machine Learning in C: The core predictive model is written in C, optimized for speed and accuracy.</li>
+      <li>Flask API: The backend, built with Flask in Python, exposes API endpoints that serve game data and predictions to the frontend.</li>
+      <li>ReactJS Frontend: A modern and dynamic ReactJS frontend interacts with the Flask API, allowing users to view game predictions in real-time.</li>
+      <li>Twitter Integration with Tweepy: Automatically posts the top picks for the day to Twitter using Tweepy in Python.</li>
+      <li>MLBStatsAPI: Team data is collected using the mlbstatsapi to provide up-to-date information for predictions.</li>
+    </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
