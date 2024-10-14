@@ -33,7 +33,7 @@
 <h3 align="center">MLB ALGO</h3>
   <p align="center">
     MLB_ALGO is a machine learning-based predictor for Major League Baseball (MLB) games. The project integrates multiple technologies to provide a comprehensive prediction system:
-    <ul>
+    <ul align="left">
       <li>Machine Learning in C: The core predictive model is written in C, optimized for speed and accuracy.</li>
       <li>Flask API: The backend, built with Flask in Python, exposes API endpoints that serve game data and predictions to the frontend.</li>
       <li>ReactJS Frontend: A modern and dynamic ReactJS frontend interacts with the Flask API, allowing users to view game predictions in real-time.</li>
