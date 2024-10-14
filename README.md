@@ -120,20 +120,20 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/AndrewKelton/MLB_ALGO.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. If using a venv be sure to start it with
+   ```sh
+   source venv/bin/activate
+   pip install -r requirements.txt
    ```
-5. Change git remote url to avoid accidental pushes to base project
+4. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin AndrewKelton/MLB_ALGO
    git remote -v # confirm the changes
