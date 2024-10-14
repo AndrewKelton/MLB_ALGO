@@ -1,4 +1,4 @@
-from path import *
+from backend.predictor.path import *
 
 mlb = mlbstatsapi.Mlb()
 
@@ -200,14 +200,52 @@ def getGameday(date, teams):
         queryPitcher(date, home_pitcher, h_pitcher_stats)
         queryPitcher(date, away_pitcher, a_pitcher_stats)
 
+# returns list of dictionaries of each game for day
+def get_games():
+    con, cur = cO.openDB("data/lamp.db")
+
+    rows = []
+    try:
+        cur.execute(f"SELECT game_id, home_team, away_team FROM `games_2024-10-08`")# `games_{str(d.getToday())}`")
+        rows = cur.fetchall()
+        games = []
+
+        # Iterate through the fetched rows and create a dictionary for each game
+        for row in rows:
+            game_dict = {
+                "game_id": row[0],         # game_id
+                "home_team": row[1],       # home_team
+                "away_team": row[2]        # away_team
+            }
+            games.append(game_dict)
+
+        cO.closeDB(con, cur)
+        return games
+
+    except sqlite3.DatabaseError as e:
+        raise ExceptionsMLB.TableNotExists
+    
+# return game info for specified game id
+def get_game_info(game_id):
+    game = mlb.get_game(game_id)
+
+    time = game.gamedata.datetime.time
+    location = game.gamedata.venue.location
+    home = game.gamedata.teams.home.abbreviation
+    away = game.gamedata.teams.away.abbreviation
+
+    return {'game_id': game_id, 'time': time, 'location': location, 'teams': away + '@' + home}
+
+
 if __name__ == "__main__":
-    date = d.getTomorrow()
-
-    createGamedayTable(date)
-    createPitcherTable(date)
-
-    print("Getting games for " + date)
-
-    TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']
-
-    getGameday(date, TEAMS)
+    get_games()
+#     date = d.getTomorrow()
+# 
+#     createGamedayTable(date)
+#     createPitcherTable(date)
+# 
+#     print("Getting games for " + date)
+# 
+#     TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']
+# 
+#     getGameday(date, TEAMS)

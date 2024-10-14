@@ -2,10 +2,13 @@
 /.vscode
 /p
 /s
-/.gitignore
+# /.gitignore
 /node_modules
 /*.tmp
 /*.log
 /predict
 /predict.dSYM
 /__pycache__
+backend/venv
+backend/__pycache__
+**/__pycache__

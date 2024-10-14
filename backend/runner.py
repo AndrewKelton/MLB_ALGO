@@ -17,10 +17,9 @@ import os
 import sys
 import shutil
 import subprocess
-import getDate as date
-import ExceptionsMLB
+from backend import getDate as d
+from backend import ExceptionsMLB
 import sqlite3
-import getDate as d
 import mlbstatsapi
 from enum import Flag, auto
 

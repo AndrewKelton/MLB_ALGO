@@ -1,9 +1,15 @@
-from path import *
+# from path import *
+from backend.outcome_checker.path import *
 mlb = mlbstatsapi.Mlb()
 
 # Open the DB for interaction
 def openDB():
     con = sqlite3.connect("data/lamp.db")
+    cur = con.cursor()
+    return con, cur
+
+def openDB(db_path : str):
+    con = sqlite3.connect(db_path)
     cur = con.cursor()
     return con, cur
 
