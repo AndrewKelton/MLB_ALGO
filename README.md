@@ -209,7 +209,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 [linkedin-url]: https://www.linkedin.com/in/andrew-kelton/
 [product-screenshot]: img_src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg
 [Python3-shield]: https://github.com/AndrewKelton/MLB_ALGO/img_src/Python-logo-notext.svg.png
-[Python3-url]: https://docs.python.org/3/
+[Python3-url]: https://img.shields.io/pypi/pyversions/:packageName
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
