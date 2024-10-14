@@ -184,8 +184,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 
 * This project utilizes the [python-mlb-statsapi](https://github.com/zero-sum-seattle/python-mlb-statsapi) from the Zero Sum Seattle group.
 * This project utilizes [tweepy](https://www.tweepy.org/).
-* []()
-
+  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
