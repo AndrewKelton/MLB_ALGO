@@ -208,7 +208,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 [license-url]: https://github.com/AndrewKelton/MLB_ALGO/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/andrew-kelton/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: img_src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg
 [Python3-shield]: https://github.com/AndrewKelton/MLB_ALGO/img_src/Python-logo-notext.svg.png
 [Python3-url]: https://docs.python.org/3/
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
