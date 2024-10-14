@@ -68,6 +68,7 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#copyright notice">Copyright Notice</a></li>
   </ol>
 </details>
 
@@ -181,13 +182,17 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
+* This project utilizes the [python-mlb-statsapi](https://github.com/zero-sum-seattle/python-mlb-statsapi) from the Zero Sum Seattle group.
+* This project utilizes [tweepy](https://www.tweepy.org/).
 * []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- COPYRIGHT NOTICE -->
+## Copyright Notice
+<p>This repository and its author are not affiliated with MLB or any MLB team. This API project interfaces with MLB's Stats API. Use of MLB data is subject to the notice posted at http://gdx.mlb.com/components/copyright.txt.</p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -218,7 +223,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 [JavaScript-shield]: https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000
 [JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
-
+[mlb-api-url]: https://github.com/zero-sum-seattle/python-mlb-statsapi
 
 
 
