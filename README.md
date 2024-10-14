@@ -76,7 +76,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 <p>The project integrates multiple technologies to provide a comprehensive prediction system:</p>
     <ul align="left">
       <li>Machine Learning in C: The core predictive model is written in C, optimized for speed and accuracy.</li>
@@ -204,7 +203,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 [license-url]: https://github.com/AndrewKelton/MLB_ALGO/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/andrew-kelton/
-[product-screenshot]: img_src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg
+[product-screenshot]: img_src/afae2248-4c16-4fce-81b4-78a81b0f0d6c.jpeg 
 
 [Python3-shield]: https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff
 [Python3-url]: https://www.python.org/
