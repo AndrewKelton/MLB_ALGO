@@ -130,7 +130,7 @@ This is an example of how to list things you need to use the software and how to
    ```
 3. If using a venv be sure to start it with
    ```sh
-   source venv/bin/activate
+   source venv/bin/activate # on unix
    pip install -r requirements.txt
    ```
 4. Change git remote url to avoid accidental pushes to base project
