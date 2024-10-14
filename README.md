@@ -68,7 +68,7 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
-    <li><a href="#copyright notice">Copyright Notice</a></li>
+    <li><a href="#copyright-notice">Copyright Notice</a></li>
   </ol>
 </details>
 
@@ -188,11 +188,17 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+
 <!-- COPYRIGHT NOTICE -->
 ## Copyright Notice
+
 <p>This repository and its author are not affiliated with MLB or any MLB team. This API project interfaces with MLB's Stats API. Use of MLB data is subject to the notice posted at http://gdx.mlb.com/components/copyright.txt.</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
