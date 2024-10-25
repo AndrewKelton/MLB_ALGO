@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            /* overflow: auto; */
+            font-family: Arial, sans-serif;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid rgb(140, 117, 117);
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 6px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .charts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+
+    <title>Andrew Kelton</title>
+  </head>
+  <body style="margin:25px;padding:0px">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+<div class="App-header">
+    <h1>Andrew Kelton<span style="font-size: 0.8em; color: rgb(102, 100, 100);">™</span></h1>
+
+    <p align="center" style="font-size: 20px;">
+        Computer Science Student @ The University of Central Florida
+    </p>
+
+    <div class='container'>
+
+        <a href="https://www.linkedin.com/in/andrew-kelton">
+            <img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555">
+        </a>
+
+        <a href="https://github.com/AndrewKelton">
+            <img src="https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white">
+        </a>
+
+        <a href="mailto:andrew7kelton@gmail.com">
+            <img src="https://img.shields.io/badge/Gmail-D14836?logo=gmail&logoColor=white">
+        </a>
+
+        <a href="https://x.com/ml_BETS_">
+            <img src="https://img.shields.io/badge/X-%23000000.svg?logo=X&logoColor=white">
+        </a>
+    </div>
+</div>
+
+<div id="about">
+    <h2 font-weight="bold" align="center">About Me</h2>
+    
+    <p align="left">
+        &emsp;I am a Computer Science Student at the University of Central Florida in Orlando (UCF), FL. Currently, I am in my second year UCF, however, I am in my third year as I took college courses my senior year of high school at Florida Southwestern State College (FSW) in Fort Myers, FL. At FSW, is where I took my interest in programming and Computer Science serious. Before attending FSW, I had taken Codecademy's Python3 course and made a few Pygames before taking my first Computer Science course, Intro to Computer Programming, at FSW. Since taking this course, I have found a strong passion for Computer Science and its abilities to further technological advancements.<br><br>&emsp;I am a hard-working, efficient, and resiliant worker. I find joy in solving problems and enjoy discovering multiple ways to arrive at a solution. Some of my professional interests include: <b>Computer Vision</b>, <b>Machine Learning</b>, <b>Remote Sensing</b>, <b>Data Analysis</b>, and <b>Artificial Intelligence</b>. 
+    </p>
+</div>
+
+<div id="skills">
+    <h2 style="font-weight:bold; text-align:center;">Skills</h2>
+
+    <div class="charts-container">
+        <div class="chart-container">
+            <div class="chart-title" style="padding-top: 0px;">Programming Languages</div>
+            <div class="chart"> 
+                <div class="bar" style="width: 90%; background-color:cornflowerblue;" data-width="90">
+                    <span class="label">Python</span>
+                </div> 
+                <div class="bar" style="width: 95%;" data-width="95">
+                    <span class="label">C</span>
+                </div> 
+                <div class="bar" style="width: 66%; background-color:chocolate;" data-width="66">
+                    <span class="label">GoLang</span>
+                </div> 
+                <div class="bar" style="width: 70%; background-color: crimson;" data-width="70">
+                    <span class="label">Java</span>
+                </div> 
+                <div class="bar" style="width: 53%; background-color: blueviolet;" data-width="53">
+                    <span class="label">JavaScript</span>
+                </div> 
+                <div class="bar" style="width: 80%; background-color: rgb(96, 115, 11);" data-width="80">
+                    <span class="label">Bash</span>
+                </div> 
+                <div class="bar" style="width: 73%; background-color: rgb(13, 79, 129);" data-width="73">
+                    <span class="label">SQL</span>
+                </div> 
+            </div> 
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Frameworks</div>
+            <div class="chart"> 
+                <div class="bar" style="width: 76%; background-color: red;" data-width="76">
+                    <span class="label">Flask</span>
+                </div> 
+                <div class="bar" style="width: 67%; background-color: purple;" data-width="67">
+                    <span class="label">React.js</span>
+                </div> 
+            </div> 
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Other Computer Skills</div>
+            <div class="chart"> 
+                <div class="bar" style="width: 87%; background-color:cornflowerblue;" data-width="87">
+                    <span class="label">Microsoft365 </span>
+                </div> 
+                <div class="bar" style="width: 96%;" data-width="96">
+                    <span class="label">DSA</span>
+                </div> 
+                <div class="bar" style="width: 96%; background-color:chocolate;" data-width="96">
+                    <span class="label">Git</span>
+                </div> 
+                <div class="bar" style="width: 92%; background-color: crimson;" data-width="92">
+                    <span class="label">Terminal</span>
+                </div> 
+                <div class="bar" style="width: 48%; background-color: blueviolet;" data-width="48">
+                    <span class="label">Machine Learning</span>
+                </div> 
+                <div class="bar" style="width: 80%; background-color: rgb(18, 88, 12);" data-width="80">
+                    <span class="label">APIs</span>
+                </div> 
+                <div class="bar" style="width: 87%; background-color: rgb(6, 58, 110);" data-width="87">
+                    <span class="label">Databases</span>
+                </div> 
+                <div class="bar" style="width: 73%; background-color: rgb(62, 82, 11);" data-width="73">
+                    <span class="label">Operating Systems</span>
+                </div>
+                <div class="bar" style="width: 75%; background-color: rgb(79, 8, 35);" data-width="75">
+                    <span class="label">HTML</span>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <p class="note" style="font-weight: lighter; text-align:center; padding-bottom: 0px;">Percentages are an estimate of my skill level</p>
+</div>
+
+<div align="center" id="courses">
+    <h2 style="font-weight:bold; margin:20px;">Relevent Coursework</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Language</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Computer Science I</td>
+                <td>COP 3502</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Computer Science II</td>
+                <td>COP 3503</td>
+                <td>Java</td>
+            </tr>
+            <tr>
+                <td>Systems Software</td>
+                <td>COP 3402</td>
+                <td>C & Assembly</td>
+            </tr>
+            <tr>
+                <td>Object Oriented Programming</td>
+                <td>COP 3330</td>
+                <td>Java</td>
+            </tr>
+            <tr>
+                <td>Security in Computing</td>
+                <td>CIS 3360</td>
+                <td>C & GoLang</td>
+            </tr>
+            <tr>
+                <td>Computer Logic & Organization</td>
+                <td>CDA 3103</td>
+                <td>C & Assembly</td>
+            </tr>
+            <tr>
+                <td>Intro to Programming with C</td>
+                <td>COP 3223</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Intro to Computer Programming</td>
+                <td>COP 1000</td>
+                <td>Python</td>
+            </tr>
+            <tr>
+                <td>Calculus I</td>
+                <td>MAC 2311</td>
+                <td>Calculus</td>
+            </tr>
+            <tr>
+                <td>Calculus II</td>
+                <td>MAC 2312</td>
+                <td>Calculus</td>
+            </tr>
+            <tr>
+                <td>Intro to Discrete Structures</td>
+                <td>COT 3100</td>
+                <td>Discrete Math</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+  </body>
+</html>

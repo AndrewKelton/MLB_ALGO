@@ -9,7 +9,10 @@ def openDB():
     return con, cur
 
 def openDB(db_path : str):
-    con = sqlite3.connect(db_path)
+    if db_path == None:
+        con = sqlite3.connect("data/lamp.db")
+    else :
+        con = sqlite3.connect(db_path)
     cur = con.cursor()
     return con, cur
 
@@ -55,11 +58,39 @@ def getPickAbr():
 
     return picks_abr
 
+def getPickAbr(date):
+    con, cur = openDB()
+
+    cur.execute(f"SELECT pick_name FROM `picks_{date}`")
+
+    picks_abr = []
+
+    rows = cur.fetchall()
+    for row in rows:
+        picks_abr.append(row[0])
+    closeDB(con, cur)
+
+    return picks_abr
+
 # get game IDs from DB... returns game_ids as list
 def getGameIDs():
     con, cur = openDB()
 
     cur.execute(f"SELECT game_id FROM `games_{str(d.getYesterday())}`")
+
+    game_ids = []
+
+    rows = cur.fetchall()
+    for row in rows:
+        game_ids.append(row[0])
+    closeDB(con, cur)
+
+    return game_ids
+
+def getGameIDs(date):
+    con, cur = openDB()
+
+    cur.execute(f"SELECT game_id FROM `games_{date}`")
 
     game_ids = []
 

@@ -1,10 +1,11 @@
 from backend.predictor.path import *
 
 mlb = mlbstatsapi.Mlb()
+TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']
 
 # create gameday table in DB
 def createGamedayTable(date):
-    con, cur = cO.openDB()
+    con, cur = cO.openDB(None)
     table_name = f"games_{date}"
 
     try:
@@ -35,7 +36,7 @@ def createGamedayTable(date):
 
 # create pitcher table in DB
 def createPitcherTable(date):
-    con, cur = cO.openDB()
+    con, cur = cO.openDB(None)
 
     table_name = f"pitchers_{date}"
 
@@ -64,7 +65,7 @@ def createPitcherTable(date):
 
 # insert game
 def queryGame(date, game_id, home, away, hw, aw, hl, al, hdv, adv, sd, h_pitcherID, a_pitcherID):
-    con, cur = cO.openDB()
+    con, cur = cO.openDB(None)
 
     cur.execute(f"INSERT INTO `games_{date}` (game_id, home_team, away_team, home_wins, away_wins, home_loss, away_loss, home_div_leader, away_div_leader, same_div, home_pitcher_id, away_pitcher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (game_id, home, away, hw, aw, hl, al, hdv, adv, sd, h_pitcherID, a_pitcherID))
     con.commit()
@@ -74,7 +75,7 @@ def queryGame(date, game_id, home, away, hw, aw, hl, al, hdv, adv, sd, h_pitcher
 
 # insert pitcher
 def queryPitcher(date, pitcherID, p_stats):
-    con, cur = cO.openDB()
+    con, cur = cO.openDB(None)
 
     cur.execute(f"INSERT INTO `pitchers_{date}` (pitcher_id, wins, losses, era, inningspitched, strikeouts, baseonballs, hits, homeruns) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (pitcherID, p_stats[0], p_stats[1], p_stats[2], p_stats[3], p_stats[4], p_stats[5], p_stats[6], p_stats[7]))
     con.commit()
@@ -201,23 +202,29 @@ def getGameday(date, teams):
         queryPitcher(date, away_pitcher, a_pitcher_stats)
 
 # returns list of dictionaries of each game for day
-def get_games():
+def get_games(date=d.getToday()):
     con, cur = cO.openDB("data/lamp.db")
-
+    
     rows = []
     try:
-        cur.execute(f"SELECT game_id, home_team, away_team FROM `games_2024-10-08`")# `games_{str(d.getToday())}`")
+        print("Date in function: " + date)
+        cur.execute(f"SELECT game_id, home_team, away_team FROM `games_{date}`")# `{date}`
         rows = cur.fetchall()
         games = []
-
+        picks = get_predictions(con, cur, date)
         # Iterate through the fetched rows and create a dictionary for each game
+        i = 0
         for row in rows:
             game_dict = {
                 "game_id": row[0],         # game_id
                 "home_team": row[1],       # home_team
-                "away_team": row[2]        # away_team
+                "away_team": row[2],        # away_team
+                "pick_name": picks[i]
             }
+            i+=1
             games.append(game_dict)
+
+        print(games)
 
         cO.closeDB(con, cur)
         return games
@@ -225,6 +232,31 @@ def get_games():
     except sqlite3.DatabaseError as e:
         raise ExceptionsMLB.TableNotExists
     
+def get_predictions(con, cur, date):
+    # con, cur = cO.openDB("data/lamp.db")
+
+    rows = []
+    try:
+        cur.execute(f"SELECT pick_name FROM `picks_{date}`")# `games_{str(d.getToday())}`")
+        rows = cur.fetchall()
+        picks = []
+
+        # Iterate through the fetched rows and create a dictionary for each game
+        for row in rows:
+            # game_dict = {
+            #     "game_id": row[0],         # game_id
+            #     "home_team": row[1],       # home_team
+            #     "away_team": row[2]        # away_team
+            # }
+            picks.append(row[0])
+
+        # cO.closeDB(con, cur)
+        return picks
+
+    except sqlite3.DatabaseError as e:
+        raise ExceptionsMLB.TableNotExists
+    
+
 # return game info for specified game id
 def get_game_info(game_id):
     game = mlb.get_game(game_id)
