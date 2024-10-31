@@ -7,6 +7,7 @@ from path import *
 # query data in twitter picks db
 def query_top_3(date, id, name):
     con, cur = cO.openDB()
+
     try:
         cur.execute(f'''CREATE TABLE IF NOT EXISTS `twitter_picks_{date}` (
             game_id INTEGER PRIMARY KEY,
@@ -36,14 +37,17 @@ def query_top_3(date, id, name):
 def top_3(games):
     top3 = {}
     vals = []
+
     for game in games:
         if len(top3) < 3:
             top3.update(game)
         else:
             cur_vals = game.values()
+
             for g in top3:
                 top_vals = g.values()
                 top_key = g.keys()
+
                 if cur_vals[1] > top_vals[1]:
                     top3.pop(top_key)
                     top3.update(game)
@@ -56,18 +60,22 @@ def keep_3(games_ids):
     
     seen = set()
     fixed_list = []
+
     for i in games_ids:
         if not i in seen:
             fixed_list.append(i)
             seen.add(i)
+
     return fixed_list
 
 # checker for game ids to check for dupes
 def check_game_ids(games_id):
     counts = Counter(games_id)
+
     for count in counts.values():
         if count > 1:
             return True
+        
     return False
     
 # split tuple amongst type of data
@@ -93,9 +101,11 @@ def get_3_games(best_3):
 
     cur.execute(query, (float(best_3[0]),))
     result1 = cur.fetchall()
+
     if len(best_3) > 1:
         cur.execute(query, (float(best_3[1]),))
         result2 = cur.fetchall()
+
         if len(best_3) > 2:
             cur.execute(query, (float(best_3[2]),))
             result3 = cur.fetchall()
@@ -103,6 +113,7 @@ def get_3_games(best_3):
             return result1, result2
     else:
         return result1
+        
     cO.closeDB(con, cur)
 
     return result1, result2, result3
@@ -110,12 +121,12 @@ def get_3_games(best_3):
 # collect pick data from printGame file
 def get_all_p(i):
     date = [d.getTomorrow()]
+
     result = subprocess.run(['python3', 'printGame.py'] + date, capture_output=True, text=True)
     output = result.stdout.strip()
     res_list = output.split()
     
     res_list = res_list[6:]
-
     percents = []
 
     while i < len(res_list):
@@ -126,7 +137,6 @@ def get_all_p(i):
 
 # keep top 3 percents X (don't care) the rest
 def get_top_p(percents):
-    print(percents)
     try:
         percents_fl = [float(p.strip('%')) for p in percents]
     except ValueError as e:
@@ -153,6 +163,36 @@ def print_all(percents):
     print(percents)
 # # # TESTING # # # 
 
+'''
+Returns dictionary of picked games, doesn't check for errors.
+Caller should check for errors.
+'''
+def get_picked_games(date : str) -> dict:
+    con, cur = cO.openDB()
+
+    cur.execute(f"SELECT * FROM `twitter_picks_{date}`")
+    rows = cur.fetchall()
+    games = []
+
+    for row in rows:
+        home_away = get_home_away(date, row[0], cur)
+
+        game_dict = {
+            "game_id": row[0],
+            "home_team": home_away[0],
+            "away_team": home_away[1],
+            "pick_name": row[1]
+        }
+
+    return games
+
+# returns [home_team, away_team] abbreviations
+def get_home_away(date : str, id, cur) -> list:
+    cur.execute(f"SELECT home_team, away_team FROM `games_{date}` WHERE game_id = ?", (id))
+
+    picks_abr = []
+    return cur.fetchone()
+     
 
 if __name__ == "__main__":
     

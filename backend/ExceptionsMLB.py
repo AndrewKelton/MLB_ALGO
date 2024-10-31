@@ -1,5 +1,6 @@
 # module holding specific MLB exceptions 
-
+from backend.outcome_checker import checkOutcome as cO
+import sqlite3
 
 class ExceptionsMLB(Exception):
     """Base for other exceptions"""
@@ -7,6 +8,19 @@ class ExceptionsMLB(Exception):
     table_not_exists_msg="Table Not Exists"
     game_not_played="Game Did Not Play"
     invalid_flag="invalid flag"
+
+    @staticmethod
+    def count_rows(table : str, date : str) -> int:
+        con, cur = cO.openDB()
+
+        try:
+            cur.execute(f"SELECT COUNT(*) FROM `{table}_{date}`")
+            return cur.fetchone()[0]
+        except sqlite3.OperationalError:
+            raise TableNotExists()
+        finally:
+            cO.closeDB(con, cur)
+
     pass
 
 class TableExists(ExceptionsMLB):
@@ -20,7 +34,7 @@ class TableNotExists(ExceptionsMLB):
     def __init__(self, message=ExceptionsMLB.table_not_exists_msg):
         self.message=message
         super().__init__(self.message)
-
+        
 class GameNotPlayed(ExceptionsMLB):
     """
     Raised when AttributeError: 'dict' object has no attribute
@@ -36,3 +50,4 @@ class InvalidFlag(ExceptionsMLB):
         self.flag = flag  
         self.message = f"{message}... {flag}"
         super().__init__(self.message)
+        

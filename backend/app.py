@@ -3,14 +3,22 @@ from flask_cors import CORS
 from backend import getDate
 from backend.predictor import getGameDay
 from backend.outcome_checker import checkOutcome as cO
-from backend import ExceptionsMLB 
+from backend.twitter_poster import top3picks as t3p
+from backend import ExceptionsMLB
 from backend import runner
 import sqlite3
 
+# files to execute if necessary
 PREDICTOR_FILES = [
     "python3 predictor/getGameDay.py", 
     "gcc -o p predictor/predict.c -lsqlite3", 
     f"./p {getDate.getTomorrow()}", 
+]
+
+OUTCOME_FILES = [
+    "python3 outcome_checker/getOutcomes.py", 
+    "gcc -o s outcome_checker/sig_stats.c -lsqlite3", 
+    f"./s {getDate.getYesterday()}",
 ]
 
 app=Flask(__name__)
@@ -24,10 +32,8 @@ def run_games():
     getGameDay.createGamedayTable(date)
     getGameDay.createPitcherTable(date)
 
-    TEAMS = ['Arizona Diamondbacks','Atlanta Braves','Baltimore Orioles','Boston Red Sox','Chicago White Sox','Chicago Cubs','Cincinnati Reds','Cleveland Guardians','Colorado Rockies','Detroit Tigers','Houston Astros','Kansas City Royals','Los Angeles Angels','Los Angeles Dodgers','Miami Marlins','Milwaukee Brewers','Minnesota Twins','New York Yankees','New York Mets','Oakland Athletics','Philadelphia Phillies','Pittsburgh Pirates','San Diego Padres','San Francisco Giants','Seattle Mariners','St. Louis Cardinals','Tampa Bay Rays','Texas Rangers','Toronto Blue Jays','Washington Nationals']
-
     try:
-        getGameDay.getGameday(date, TEAMS)
+        getGameDay.getGameday(date, getGameDay.TEAMS)
         return True
     except ValueError:
         return False
@@ -36,7 +42,6 @@ def run_games():
 @app.route('/api/games')
 def get_games():
     try:
-        games = getGameDay.get_games()
         return jsonify(getGameDay.get_games()), 200
     
     except ExceptionsMLB.TableNotExists as e:
@@ -58,8 +63,8 @@ def get_games():
 # Get games for certain date
 @app.route('/api/games/<date>', methods=['GET'])
 def get_games_date(date):
-    print("date: " + date)
     date = str(date)
+
     try:
         games = getGameDay.get_games(date)
         return jsonify(getGameDay.get_games(date)), 200
@@ -79,8 +84,9 @@ def get_games_date(date):
 
         except AttributeError as ae:
             return jsonify({"error": "System error"}), 404
-    
-@app.route('/api/game/predict')
+
+# Predict games from api endpoint
+@app.route('/api/games/predict')
 def predict_games():
     for command in PREDICTOR_FILES:
         stderr = runner.run_command(command)
@@ -90,7 +96,11 @@ def predict_games():
                 return jsonify({"error": "No data for day..."}), 304
             else:
                 return jsonify({"error": "server error"}), 404
-            
+
+'''
+    Predict games for certain day. Called from '/api/games/<date>'
+    endpoint when predictions have not been created for that day.
+'''          
 def predict_games_date(date):
     for command in PREDICTOR_FILES:
         stderr = runner.run_command(command)
@@ -100,34 +110,65 @@ def predict_games_date(date):
                 return jsonify({"error": "No data for day..."}), 304
             else:
                 return jsonify({"error": "server error"}), 404
-            
-# @app.route('/api/games/<int:game_id>', methods=['GET'])
-# def get_game_details(game_id):
-#     game = next((g for g in getGameDay.get_games() if g['game_id'] == game_id), None)
-# 
-#     if game:
-#         return jsonify(getGameDay.get_game_info(game_id=game_id))
-#     else:
-#         return jsonify({"error": "Game not found"}), 404
 
-# @app.route('/api/games/predictions')
-# def get_all_predictions():
-#     try:
-#         predictions = cO.getPickAbr('2024-10-01') # getDate.getToday()
-#     except sqlite3.DatabaseError:
-#         return jsonify({"error": "Games not found"}), 404
-#     
-#     try:
-#         pred_ids = cO.getGameIDs('2024-10-01') # getDate.getToday()
-#     except sqlite3.DatabaseError:
-#         return jsonify({"error": "Games not found"}), 404
-# 
-#     pred_dict = {}
-#     for i in range(len(predictions)):
-#         pred_dict.update(pred_ids[i], predictions[i])
-# 
-#     return jsonify(pred_dict)
+# Get outcomes for yesterday's game from api endpoint
+@app.route('/api/game/outcomes') 
+def get_outcomes():
+    try:
+        row_count = ExceptionsMLB.ExceptionsMLB.count_rows('outcomes' , getDate.getYesterday())
 
-# Run the app
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+        else:
+            for command in OUTCOME_FILES:
+                stderr = runner.run_command(command)
+
+                if stderr:
+                    if ExceptionsMLB.ExceptionsMLB.table_exists_msg in stderr or ExceptionsMLB.ExceptionsMLB.table_not_exists_msg in stderr:
+                        return jsonify({"error": "No data for day..."}), 304
+                    else:
+                        return jsonify({"error": "server error"}), 404
+                    
+    except ExceptionsMLB.TableExists as te:
+        return jsonify({"error": "outcomes exist already"})
+
+'''
+    Get outcomes for a certain day. Called from another
+    endpoint when outcomes have not been created for that day.
+'''
+def get_outcomes_date(date : str):
+    try:
+        row_count = ExceptionsMLB.ExceptionsMLB.count_rows('outcomes' ,date)
+
+        if row_count != 0:
+            raise ExceptionsMLB.TableExists()
+        else:
+            for command in OUTCOME_FILES:
+                stderr = runner.run_command(command)
+
+                if stderr:
+                    if ExceptionsMLB.ExceptionsMLB.table_exists_msg in stderr or ExceptionsMLB.ExceptionsMLB.table_not_exists_msg in stderr:
+                        return jsonify({"error": "No data for day..."}), 304
+                    else:
+                        return jsonify({"error": "server error"}), 404
+                    
+    except ExceptionsMLB.TableExists as te:
+        return jsonify({"error": "outcomes exist already"})
+
+# Gets highest percentage of picked games
+def get_top_picks(date : str):
+    try:
+        row_count = ExceptionsMLB.ExceptionsMLB.count_rows('twitter_picks', date)
+
+        if row_count > 0:
+            return jsonify(t3p.get_picked_games(date))
+        else:
+            raise ExceptionsMLB.TableNotExists()
+
+    except ExceptionsMLB.TableNotExists:
+        return jsonify({"error": "No data for day..."}), 304
+    
+    
+# Run the backend api
 if __name__ == '__main__':
     app.run(debug=True)   

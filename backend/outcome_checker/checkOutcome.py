@@ -6,6 +6,7 @@ mlb = mlbstatsapi.Mlb()
 def openDB():
     con = sqlite3.connect("data/lamp.db")
     cur = con.cursor()
+
     return con, cur
 
 def openDB(db_path : str):
@@ -13,7 +14,9 @@ def openDB(db_path : str):
         con = sqlite3.connect("data/lamp.db")
     else :
         con = sqlite3.connect(db_path)
+
     cur = con.cursor()
+
     return con, cur
 
 # Close the DB interaction
@@ -39,6 +42,7 @@ def queryOutcome(game_id, team_id, correct):
 
     cur.execute(f"INSERT INTO `outcomes_{str(d.getYesterday())}` (game_id, team_abr, correct) VALUES (?, ?, ?)", (game_id, team_id, correct))
     con.commit()
+
     print("Outcomes have been inserted")
 
     closeDB(con, cur)
@@ -50,8 +54,8 @@ def getPickAbr():
     cur.execute(f"SELECT pick_name FROM `picks_{str(d.getYesterday())}`")
 
     picks_abr = []
-
     rows = cur.fetchall()
+
     for row in rows:
         picks_abr.append(row[0])
     closeDB(con, cur)
@@ -64,8 +68,8 @@ def getPickAbr(date):
     cur.execute(f"SELECT pick_name FROM `picks_{date}`")
 
     picks_abr = []
-
     rows = cur.fetchall()
+
     for row in rows:
         picks_abr.append(row[0])
     closeDB(con, cur)
@@ -79,8 +83,8 @@ def getGameIDs():
     cur.execute(f"SELECT game_id FROM `games_{str(d.getYesterday())}`")
 
     game_ids = []
-
     rows = cur.fetchall()
+
     for row in rows:
         game_ids.append(row[0])
     closeDB(con, cur)
@@ -93,8 +97,8 @@ def getGameIDs(date):
     cur.execute(f"SELECT game_id FROM `games_{date}`")
 
     game_ids = []
-
     rows = cur.fetchall()
+
     for row in rows:
         game_ids.append(row[0])
     closeDB(con, cur)
@@ -107,8 +111,8 @@ def getFinalScores():
     picks_abr = getPickAbr()
 
     correct = []
-
     i = 0
+
     for id in game_ids:
         game = mlb.get_game(id)
 
@@ -128,8 +132,6 @@ def getFinalScores():
 
         queryOutcome(id, picks_abr[i], correct[i])
         i += 1
-        # decisionTree(id, picks_abr[i], correct[i])
-
 
 # get team stats and pitcher stats functions to implement
 def getTeamStats(game_id):
@@ -154,6 +156,7 @@ HERE
 # Decision Tree Algorithm (TO BE IMPLEMENTED PERHAPS IN C INSTEAD)
 def decisionTree(game_id, pick, correct):
     total = 0
+
     if correct == 0:
         return 0
     else:

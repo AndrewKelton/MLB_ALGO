@@ -10,7 +10,7 @@ import './App.css';
   */
 
 
-// Collect today's date
+// Collect and return today's date (unused currently)
 function getDate() {
   const today = new Date();
   const year = today.getFullYear();
@@ -71,23 +71,25 @@ function GamesList() {
   };
 
   return (
-    <div>
+    <div style={{alignContent:"center"}}>
       <h2>MLB Games for {selectedDate}</h2>
 
+      <div>
       {/* Date input to allow the user to pick a date */}
-      <input 
-        type="date" 
-        value={selectedDate} 
-        onChange={handleDateChange} 
-      />
+        <input style={{textAlign: "center"}}
+          type="date" 
+          value={selectedDate} 
+          onChange={handleDateChange} 
+        />
 
-      {data ? (
-        <ul>
-          {data.map(renderGame)}
-        </ul>
-      ) : (
-        <p>Loading games...</p>
-      )}
+        {data ? (
+          <ul style={{marginLeft: 10, listStyle: "none"}}>
+            {data.map(renderGame)}
+          </ul>
+        ) : (
+          <p>Loading games...</p>
+        )}
+      </div>
     </div>
   );
 }
@@ -173,9 +175,11 @@ const PredictForm = () => {
         <img src="/mlb_algo_logo.jpeg" alt="Logo" className="App-logo"/>
       </div>
 
-      <h1>MLB Game Outcome Predictor</h1>
-
-      <GamesList />
+      <h1 style={{textAlign:"center"}}>MLB Game Outcome Predictor</h1>
+      
+      <div style={{marginLeft: 30}}>
+        <GamesList />
+      </div>
 
     </div>
   );
