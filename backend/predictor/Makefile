@@ -1,6 +1,5 @@
-
 # exe
-INNINGS_PREDICT = INNINGS_PREDICT
+INNINGS_PREDICT = innings_predict
 INSTR = innings_instr
 UTIL = utilities
 
@@ -13,15 +12,17 @@ RM = rm -f
 CC = gcc
 CFLAGS = -g -std=c17 -Wall
 
-$(INNINGS_PREDICT): $(INNINGS_OBJECTS) 
+$(INNINGS_PREDICT): $(INNINGS_OBJECTS)
 	$(CC) $(CFLAGS) -o $(INNINGS_PREDICT) $(INNINGS_OBJECTS)
 
-$(INNINGS_PREDICT).o: $(INNINGS_PREDICT).c innings_instr.h utilities.h \
-	$(CC) $(CFLAGS) -c $<
+$(INNINGS_PREDICT).o: $(INNINGS_PREDICT).c innings_instr.h utilities.h
+	$(CC) $(CFLAGS) -c $(INNINGS_PREDICT).c
+
+$(INSTR).o: $(INSTR).c innings_instr.h
+	$(CC) $(CFLAGS) -c $(INSTR).c
+
+$(UTIL).o: $(UTIL).c utilities.h
+	$(CC) $(CFLAGS) -c $(UTIL).c
 
 clean:
-	$(RM) *~ *.o 
-
-# rule for compiling individual .c files
-%.o: %.c %.h
-	$(CC) $(CFLAGS) -c $<
+	$(RM) *~ *.o
