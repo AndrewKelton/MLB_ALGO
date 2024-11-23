@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-// import './GameDetails';
+
 
  /* 
   * QUICK FIX 
@@ -92,6 +92,10 @@ function GamesList() {
       </div>
     </div>
   );
+}
+
+function GamesNoPick() {
+  const [data]
 }
 // function GamesList() {
 //   const [data, setData] = useState(null);

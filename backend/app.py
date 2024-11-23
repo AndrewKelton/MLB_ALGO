@@ -6,7 +6,10 @@ from backend.outcome_checker import checkOutcome as cO
 from backend.twitter_poster import top3picks as t3p
 from backend import ExceptionsMLB
 from backend import runner
+import sys
 import sqlite3
+
+KEY = "secert_key"
 
 # files to execute if necessary
 PREDICTOR_FILES = [
@@ -168,7 +171,12 @@ def get_top_picks(date : str):
     except ExceptionsMLB.TableNotExists:
         return jsonify({"error": "No data for day..."}), 304
     
-    
+# TEST
+def post_picks(key : str):
+    if key is KEY:
+        print("key is KEY")
+
+
 # Run the backend api
 if __name__ == '__main__':
     app.run(debug=True)   

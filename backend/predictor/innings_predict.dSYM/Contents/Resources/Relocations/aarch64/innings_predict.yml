@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/andrewkelton/Desktop/code/MLB_ALGO/backend/predictor/innings_predict'
+relocations:     []
+...

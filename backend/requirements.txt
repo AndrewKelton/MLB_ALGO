@@ -2,6 +2,8 @@ Flask
 Flask-CORS
 python-mlb-statsapi
 tweepy
+beautifulsoup4
+pandas
 
 # source venv/bin/activate
 # pip install -r requirements.txt

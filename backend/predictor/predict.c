@@ -1,7 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<sqlite3.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sqlite3.h>
 #define MAX 100 // used to allocate 100 bytes for chars ONLY
 #define MAXSCORE 16 // maximum score team can get (without added count)
 #define SIGSTATTABLE "significant_stats"
