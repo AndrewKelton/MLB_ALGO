@@ -40,10 +40,10 @@ typedef struct game_s {
     team_t * away;
 } game_t;
 
-typedef struct node_s {
+typedef struct games_node_s {
     game_t * game;
-    struct node_s * next;
-} node_t;
+    struct games_node_s * next;
+} games_node_t;
 
 struct StringMapEntry * search_name(char * name);
 
@@ -61,5 +61,7 @@ teams_list_t * read_stats(teams_list_t * teams_list);
 void print_team(team_t * team);
 
 void add_team_entry(teams_list_t ** head, teams_list_t * node);
+
+
 
 #endif

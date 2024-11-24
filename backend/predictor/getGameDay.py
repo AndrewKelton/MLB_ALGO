@@ -127,7 +127,7 @@ def getGameday(date, teams):
 
     for id in game_id:
         try:
-            game = mlb.get_game(id)
+            game=mlb.get_game(id)
         except TypeError: # TypeError means game is already in progress
             continue
 
@@ -142,8 +142,8 @@ def getGameday(date, teams):
         away_recW = away.record.wins
         home_recL = home.record.losses
         away_recL = away.record.losses
-        homeWP = home.record.winningpercentage
-        awayWP = away.record.winningpercentage
+        # homeWP = home.record.winningpercentage
+        # awayWP = away.record.winningpercentage
 
         # pitcher stats
         home_pitcher = 0

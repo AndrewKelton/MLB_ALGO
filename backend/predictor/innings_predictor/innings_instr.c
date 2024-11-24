@@ -1,8 +1,8 @@
 #include "innings_instr.h"
 
 // String map from team abbreviation to full name
-static struct StringMapEntry team_map[MAX_TEAMS] = {
-    {"ARI", "Arizona"},
+struct StringMapEntry team_map[MAX_TEAMS] = {
+    {"AZ", "Arizona"},
     {"ATL", "Atlanta"},
     {"BAL", "Baltimore"},
     {"BOS", "Boston"},
@@ -38,7 +38,7 @@ static struct StringMapEntry team_map[MAX_TEAMS] = {
 struct StringMapEntry * search_name(char * name)
 {
     for (int i = 0; i < MAX_TEAMS; i++) 
-        if (strcmp(team_map[i].value, name) == 0) 
+        if (strcmp(team_map[i].value, name) == 0 || strcmp(team_map[i].key, name) == 0) 
             return &team_map[i];
     
     bail_with_error("team does not exist");
@@ -69,6 +69,7 @@ extern teams_list_t * init_teams_list()
     return teams_list;
 }
 
+// initialize game structure
 extern void init_game(game_t ** game)
 {
     *game = malloc(sizeof(teams_list_t));
@@ -163,9 +164,8 @@ teams_list_t * read_stats(teams_list_t * teams_list)
         curr->next = NULL;
 
         add_team_entry(&head, curr);
-
-        print_team(team);
     }
+    
     fclose(file);
 
     return head;
