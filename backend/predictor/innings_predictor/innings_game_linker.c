@@ -85,7 +85,7 @@ extern map_game_list *get_games_date(const char *date)
     int rc;
     char sql[MAX];
 
-    rc = sqlite3_open("../data/lamp.db", &db);
+    rc = sqlite3_open("../../data/lamp.db", &db);
 
     if (rc)
         bail_with_error(sqlite3_errmsg(db));

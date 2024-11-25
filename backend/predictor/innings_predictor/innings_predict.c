@@ -2,6 +2,7 @@
 #include "innings_instr.h"
 #include "utilities.h"
 #include "innings_game_linker.h"
+#include "log_regression.h"
 
 #define MAX_TEAMS 30
 
@@ -15,7 +16,7 @@ games_node_t * init_games(const char * date)
 }
 
 /* remove games with rank under 15 
- * (lower rank == more likely to get a run in 1st inning) */
+ * (lower rank == teams with highest runs in 1st inning) */
 int remove_low_rank(games_node_t ** games_list)
 {
     games_node_t * prev = NULL;
@@ -147,12 +148,17 @@ int main(/*int argc, char * argv[]*/)
 
     int length = remove_low_rank(&games_list);
 
-    linear_regression_all(games_list, length);
+    int n_features = 6;
+    double alpha = 0.01;
+    int iterations = 1000;
+
+    train_model(games_list, length, n_features, alpha, iterations);
+
+    // linear_regression_all(games_list, length);
 
     // double *X, *Y;
     // int n_samples, n_features;
     // prepare_data(games_list, &X, &Y, &n_samples, &n_features, length * 2);
-
 
     return 0;
 }
@@ -170,4 +176,22 @@ int main(/*int argc, char * argv[]*/)
             printf("%d\t%d\n", games_list->game->home->stats->rank, games_list->game->away->stats->rank);
             games_list = games_list->next;
     }
+
+
+    double *X, *Y;
+    int n_samples, n_features;
+    create_matrix(games_list->game->home, games_list->game->away, &X, &Y, &n_samples, &n_features);
+
+    // Allocate weights
+    double *W = (double *)malloc(n_features * sizeof(double));
+
+    // Compute weights
+    compute_weights(W, X, Y, n_samples, n_features);
+
+    // Print weights
+    printf("Computed Weights:\n");
+    for (int i = 0; i < n_features; i++) {
+        printf("W[%d] = %.4f\n", i, W[i]);
+    }
+
 */

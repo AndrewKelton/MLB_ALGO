@@ -8,6 +8,14 @@
 #define MAX_TEAMS 30
 #define INNINGS_FILE "innings.csv"
 
+// independent type variables
+typedef enum {
+    curr_szn, prev_szn,
+    l_3, l_1,
+    home_avg, away_avg,
+    rank
+} IND_type;
+
 // Entry for a string map
 struct StringMapEntry {
     const char * key;
