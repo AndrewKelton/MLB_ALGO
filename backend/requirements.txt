@@ -4,6 +4,8 @@ python-mlb-statsapi
 tweepy
 beautifulsoup4
 pandas
+matplotlib
+scikit-learn
 
 # source venv/bin/activate
 # pip install -r requirements.txt

@@ -6,8 +6,9 @@ LINKER = innings_game_linker
 LINEAR = linear_regression
 MULTI = multi_regression
 LOG = log_regression
+MAT = matrix_comp
 
-INNINGS_OBJECTS = $(INNINGS_PREDICT).o $(INSTR).o $(UTIL).o $(LINKER).o $(LOG).o
+INNINGS_OBJECTS = $(INNINGS_PREDICT).o $(INSTR).o $(UTIL).o $(LINKER).o $(LOG).o $(MAT).o
 
 # cmds
 RM = rm -f
@@ -22,7 +23,7 @@ LAPFLAGS = -llapacke -llapack -lblas -lm
 $(INNINGS_PREDICT): $(INNINGS_OBJECTS)
 	$(CC) $(CFLAGS) -o $(INNINGS_PREDICT) $(INNINGS_OBJECTS) $(LDFLAGS) 
 
-$(INNINGS_PREDICT).o: $(INNINGS_PREDICT).c innings_instr.h utilities.h innings_game_linker.h log_regression.h
+$(INNINGS_PREDICT).o: $(INNINGS_PREDICT).c innings_instr.h utilities.h innings_game_linker.h log_regression.h matrix_comp.h
 	$(CC) $(CFLAGS) -c $(INNINGS_PREDICT).c
 
 $(INSTR).o: $(INSTR).c innings_instr.h
@@ -36,6 +37,9 @@ $(LINKER).o: $(LINKER).c innings_game_linker.h
 
 $(LOG).o: $(LOG).c log_regression.h
 	$(CC) $(CFLAGS) -c $(LOG).c
+
+$(MAT).o: $(LOG).c matrix_comp.h
+	$(CC) $(CFLAGS) -c $(MAT).c
 
 
 # $(MULTI).o: $(LINEAR).c multi_regression.h

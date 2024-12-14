@@ -70,6 +70,7 @@ void print_team(team_t * team);
 
 void add_team_entry(teams_list_t ** head, teams_list_t * node);
 
+double return_prob(double stat);
 
 
 #endif

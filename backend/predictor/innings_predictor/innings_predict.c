@@ -3,6 +3,7 @@
 #include "utilities.h"
 #include "innings_game_linker.h"
 #include "log_regression.h"
+#include "matrix_comp.h"
 
 #define MAX_TEAMS 30
 
@@ -116,6 +117,27 @@ void linear_regression_all(games_node_t *games, int length) {
     free(vals_y0);
 }
 
+void free_game(game_t * game)
+{
+    free(game->home->stats);
+    free(game->home->team_name);
+    free(game->home);
+    free(game->away->stats);
+    free(game->away->team_name);
+    free(game->away);
+    free(game);     
+}
+
+void free_data(games_node_t * games)
+{
+    while (games)
+    {
+        games_node_t * curr = games;
+        games = games->next;
+        free_game(curr->game);
+        free(curr);
+    }
+}
 
 /*
 void linear_regression_all(games_node_t * games, int length bounds)
@@ -147,12 +169,48 @@ int main(/*int argc, char * argv[]*/)
     games_node_t * games_list = init_games("2024-08-21");
 
     int length = remove_low_rank(&games_list);
+    int * res_arr = malloc(sizeof(int) * length);
+    int i = 0;
+    
+    games_node_t * curr = games_list;
+    while (curr) {
+        data_to_matrix(games_list->game);
 
-    int n_features = 6;
-    double alpha = 0.01;
-    int iterations = 1000;
+        double res = comp_stats();
+        print_mat();
+        res_arr[i++] = (int) res;
+        // printf("%d\t%lf\n", res_arr[i++], res);
+        printf("Home: %s\tAway: %s\n", curr->game->home->team_name->key, curr->game->away->team_name->key);
+        printf("RES: %lf\n\n", res);
+        curr = curr->next;
+        clean_up();
+    }
 
-    train_model(games_list, length, n_features, alpha, iterations);
+    free(res_arr);
+    // for (int i = 0; i < length; i++)
+    // {
+    //     
+    //     // res_arr[i] = MAX_SIZE - 1 - res_arr[i];
+    // }
+
+    // curr = games_list;
+    // for (int i = 0; i < length; i++) {
+    //     printf("RES: %d\n", res_arr[i]);
+    //     if (res_arr[i] > 3)
+    //     {
+    //         printf("Home: %s\tAway: %s\nn", curr->game->home->team_name->key, curr->game->away->team_name->key);
+    //         // printf("RES: %d\n\n", res_arr[i]);
+    //     }
+    //     curr = curr->next; 
+    // }
+
+    // free_data(games_list);
+
+    // int n_features = 6;
+    // double alpha = 0.01;
+    // int iterations = 1000;
+
+    // train_model(games_list, length, n_features, alpha, iterations);
 
     // linear_regression_all(games_list, length);
 

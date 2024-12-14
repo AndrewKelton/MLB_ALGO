@@ -170,3 +170,9 @@ teams_list_t * read_stats(teams_list_t * teams_list)
 
     return head;
 }
+
+// return probability of getting no runs first inning
+double return_prob(double stat)
+{
+    return 1.0 - stat;
+}
