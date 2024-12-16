@@ -2,8 +2,7 @@
 #include "innings_instr.h"
 #include "utilities.h"
 #include "innings_game_linker.h"
-#include "log_regression.h"
-#include "matrix_comp.h"
+#include "game_dec_tree.h"
 
 #define MAX_TEAMS 30
 
@@ -166,27 +165,30 @@ void linear_regression_all(games_node_t * games, int length bounds)
 
 int main(/*int argc, char * argv[]*/) 
 { 
-    games_node_t * games_list = init_games("2024-08-21");
+    games_node_t * games_list = init_games("2024-08-22");
 
     int length = remove_low_rank(&games_list);
     int * res_arr = malloc(sizeof(int) * length);
     int i = 0;
     
     games_node_t * curr = games_list;
-    while (curr) {
-        data_to_matrix(games_list->game);
 
-        double res = comp_stats();
-        print_mat();
-        res_arr[i++] = (int) res;
-        // printf("%d\t%lf\n", res_arr[i++], res);
-        printf("Home: %s\tAway: %s\n", curr->game->home->team_name->key, curr->game->away->team_name->key);
-        printf("RES: %lf\n\n", res);
-        curr = curr->next;
-        clean_up();
-    }
+    comp_results_all(run_dec_all(curr));
 
-    free(res_arr);
+//     while (curr) {
+//         data_to_matrix(games_list->game);
+// 
+//         double res = comp_stats();
+//         print_mat();
+//         res_arr[i++] = (int) res;
+//         // printf("%d\t%lf\n", res_arr[i++], res);
+//         printf("Home: %s\tAway: %s\n", curr->game->home->team_name->key, curr->game->away->team_name->key);
+//         printf("RES: %lf\n\n", res);
+//         curr = curr->next;
+//         clean_up();
+//     }
+// 
+//     free(res_arr);
     // for (int i = 0; i < length; i++)
     // {
     //     

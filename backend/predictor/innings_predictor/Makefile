@@ -1,53 +1,30 @@
-# exe
-INNINGS_PREDICT = innings_predict
-INSTR = innings_instr
-UTIL = utilities
-LINKER = innings_game_linker
-LINEAR = linear_regression
-MULTI = multi_regression
-LOG = log_regression
-MAT = matrix_comp
+# Executable
+TARGET = innings_predict
 
-INNINGS_OBJECTS = $(INNINGS_PREDICT).o $(INSTR).o $(UTIL).o $(LINKER).o $(LOG).o $(MAT).o
+# Source files and object files
+SRCS = innings_predict.c innings_instr.c utilities.c \
+       innings_game_linker.c decision_tree.c game_dec_tree.c
+OBJS = $(SRCS:.c=.o)
 
-# cmds
-RM = rm -f
-
-# tools
+# Compiler and flags
 CC = gcc
 CFLAGS = -g -std=c17 -Wall
 LDFLAGS = -lsqlite3
-LAPFLAGS = -llapacke -llapack -lblas -lm
 
+# Clean command
+RM = rm -f
 
-$(INNINGS_PREDICT): $(INNINGS_OBJECTS)
-	$(CC) $(CFLAGS) -o $(INNINGS_PREDICT) $(INNINGS_OBJECTS) $(LDFLAGS) 
+# Default target
+all: $(TARGET)
 
-$(INNINGS_PREDICT).o: $(INNINGS_PREDICT).c innings_instr.h utilities.h innings_game_linker.h log_regression.h matrix_comp.h
-	$(CC) $(CFLAGS) -c $(INNINGS_PREDICT).c
+# Link the executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(INSTR).o: $(INSTR).c innings_instr.h
-	$(CC) $(CFLAGS) -c $(INSTR).c
+# Compile source files to object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(UTIL).o: $(UTIL).c utilities.h
-	$(CC) $(CFLAGS) -c $(UTIL).c
-
-$(LINKER).o: $(LINKER).c innings_game_linker.h
-	$(CC) $(CFLAGS) -c $(LINKER).c
-
-$(LOG).o: $(LOG).c log_regression.h
-	$(CC) $(CFLAGS) -c $(LOG).c
-
-$(MAT).o: $(LOG).c matrix_comp.h
-	$(CC) $(CFLAGS) -c $(MAT).c
-
-
-# $(MULTI).o: $(LINEAR).c multi_regression.h
-# 	$(CC) $(CFLAGS) -c $(MULTI).c
-# 
-# $(LINEAR).o: $(LINEAR).c linear_regression.h
-# 	$(CC) $(CFLAGS) -c $(LINEAR).c
-
-
+# Clean up generated files
 clean:
-	$(RM) *~ *.o
+	$(RM) $(TARGET) $(OBJS) *~
