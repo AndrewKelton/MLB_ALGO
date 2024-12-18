@@ -83,9 +83,10 @@ static double comp_res_db_arr(double * r_db)
             continue;
         else 
             count++;
-        printf("%lf\t",r_db[i]);
+        // printf("%lf\t",r_db[i]);
     }
-    printf("\n");
+    // printf("\n");
+    
     return (double) count / MAX;
 }
 
@@ -94,7 +95,7 @@ static double comp_res_db_arr(double * r_db)
 static bool comp_results_game(game_tree_t * game_dec)
 {
     if (!game_dec || !game_dec->away_tree || !game_dec->home_tree)
-        return (double) 0;
+        return false;
 
     d_tree_t * home_dec = game_dec->home_tree;
     d_tree_t * away_dec = game_dec->away_tree;
@@ -105,9 +106,8 @@ static bool comp_results_game(game_tree_t * game_dec)
     int i = 0;
     
     while (home_dec && away_dec) {
-        printf("Home result: %lf, Away result: %lf\n", home_dec->result, away_dec->result);
-       
-       bool is_left = false;
+        bool is_left = false;
+        
         if (home_dec->left) {
             home_dec = home_dec->left;
             is_left = true;
@@ -128,19 +128,17 @@ static bool comp_results_game(game_tree_t * game_dec)
         else 
             res_b_arr[i] = true;
 
-        // printf("%lf\t%lf\n", home_dec->result, away_dec->result);
         res_diff[i++] = home_dec->result - away_dec->result;
     }
-    printf("\n");
 
     double res_b = comp_res_bool_arr(res_b_arr);
     double res_db = comp_res_db_arr(res_diff);
     free(res_b_arr);
     free(res_diff);
 
-    printf("HOME: %s\tAWAY: %s\n", game_dec->game->home->team_name->key, game_dec->game->away->team_name->key);
+    // printf("HOME: %s\tAWAY: %s\n", game_dec->game->home->team_name->key, game_dec->game->away->team_name->key);
     
-    printf("RESULT: %lf\n", res_db + res_b / 2.0);
+    // printf("RESULT: %lf\n", res_db + res_b / 2.0);
 
     FILE * fp = fopen("tmp.csv", "a");
 
@@ -152,6 +150,7 @@ static bool comp_results_game(game_tree_t * game_dec)
     return false; 
 }
 
+// free data from decision trees
 static void free_tree_data(game_tree_t * gt)
 {
     if (!gt)
@@ -164,6 +163,7 @@ static void free_tree_data(game_tree_t * gt)
     free(gt);
 }
 
+// compare results of all games' decision trees
 void comp_results_all(game_tree_t * game_dec_list)
 {
     if (game_dec_list) {
