@@ -3,17 +3,15 @@
 // run singular decision tree
 static void dec_tree_team(d_tree_t * dt, team_t * t)
 {
-    // printf("HERE\n");
     _t_decision_tree(dt, t->stats, 0);
 }
 
 // run home/away decision trees
 static void do_dec_tree(game_tree_t * gt)
 {
-    // printf("HERE\n");
     if (!gt) 
         return;
-    // printf("HERE 11\n");
+    
     dec_tree_team(gt->home_tree, gt->game->home);
     dec_tree_team(gt->away_tree, gt->game->away);
     do_dec_tree(gt->next);
@@ -83,9 +81,7 @@ static double comp_res_db_arr(double * r_db)
             continue;
         else 
             count++;
-        // printf("%lf\t",r_db[i]);
     }
-    // printf("\n");
     
     return (double) count / MAX;
 }
@@ -136,13 +132,9 @@ static bool comp_results_game(game_tree_t * game_dec)
     free(res_b_arr);
     free(res_diff);
 
-    // printf("HOME: %s\tAWAY: %s\n", game_dec->game->home->team_name->key, game_dec->game->away->team_name->key);
-    
-    // printf("RESULT: %lf\n", res_db + res_b / 2.0);
+    FILE * fp = fopen("tmp.csv", "w");
 
-    FILE * fp = fopen("tmp.csv", "a");
-
-    fprintf(fp, "%s, %s, %s, %lf, %lf, %lf\n", game_dec->game->home->team_name->key, game_dec->game->away->team_name->key, (res_db + res_b) / 2.0 < 0.8 || res_db != res_b ? "true" : "false", (res_b + res_db) / 2.0, res_b, res_db);
+    fprintf(fp, "%s,%s,%s,%lf,%lf,%lf\n", game_dec->game->home->team_name->key, game_dec->game->away->team_name->key, (res_db + res_b) / 2.0 < 0.8 || res_db != res_b ? "true" : "false", (res_b + res_db) / 2.0, res_b, res_db);
     fclose(fp);
 
     if ((res_b + res_db) / 2.0 < 0.8)

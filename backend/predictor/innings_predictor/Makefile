@@ -1,4 +1,4 @@
-# Executable
+# Main Executable
 TARGET = innings_predict
 
 # Source files and object files
@@ -15,11 +15,24 @@ LDFLAGS = -lsqlite3
 RM = rm -f
 
 # Default target
-all: $(TARGET)
+innings_predict: innings_predict.o $(OBJS)
+# all: $(TARGET)
 
 # Link the executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+# Pipeline Executable
+PIP_TARGET = pipeline_main
+
+PIP_SRCS = pipeline_main.c utilities.c
+PIP_OBJS = $(SRCS:.c=.o)
+
+# Default Pipeline
+pipeline_main: pipeline_main.o $(PIP_OBJS)
+
+$(PIP_TARGET): $(PIP_OBJS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Compile source files to object files
 %.o: %.c
@@ -27,4 +40,4 @@ $(TARGET): $(OBJS)
 
 # Clean up generated files
 clean:
-	$(RM) $(TARGET) $(OBJS) *~
+	$(RM) $(TARGET) $(PIP_TARGET) $(OBJS) *~

@@ -3,8 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-
-URL='https://www.teamrankings.com/mlb/stat/1st-inning-runs-per-game'
+URL='https://www.teamrankings.com/mlb/stat/1st-inning-runs-per-game' # Website for 1st inning data
 
 def connect_stats(date : str):
     date_url = URL + "?date=" + date
@@ -35,4 +34,10 @@ def connect_stats(date : str):
         print("Error getting innings data", sys.stderr)
 
 if __name__ == '__main__':
+    """
+    date=sys.argv[1]
+    connect_stats(date) 
+    ** Use this instead of below **
+    """
+
     connect_stats("2024-11-01")

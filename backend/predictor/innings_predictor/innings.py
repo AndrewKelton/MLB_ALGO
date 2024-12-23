@@ -1,6 +1,5 @@
 from backend import ExceptionsMLB
 from backend.runner import run_command
-import sys
 
 DATA_FILE = 'python3 get_innings_data.py'
 
