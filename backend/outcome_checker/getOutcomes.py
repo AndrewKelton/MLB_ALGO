@@ -1,4 +1,6 @@
 from backend.outcome_checker.path import *
+from backend.outcome_checker import checkOutcome as cO
+
 mlb = mlbstatsapi.Mlb()
 
 # get picks from algorithm

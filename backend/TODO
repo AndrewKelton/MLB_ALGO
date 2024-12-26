@@ -1,0 +1,4 @@
+- Create API endpoint for innings picks and data
+- Remove unused c files in innings_predictor
+- Test innings pipeline
+- Create check_innings_outcomes.py to check outcomes of innings predictions

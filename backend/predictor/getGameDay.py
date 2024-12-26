@@ -215,7 +215,7 @@ def get_games(date=d.getToday()) -> dict:
         return games
 
     except sqlite3.DatabaseError as e:
-        raise ExceptionsMLB.TableNotExists
+        raise ExceptionsMLB.TableNotExists()
 
 ''' 
 Called from get_games().

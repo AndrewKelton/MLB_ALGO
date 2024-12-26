@@ -76,7 +76,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt = dt->left;
                 return;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         case prev_szn:
@@ -92,7 +91,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         case l_3:
@@ -108,7 +106,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
             
         case l_1:
@@ -124,7 +121,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         case home_avg:
@@ -140,7 +136,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         case away_avg:
@@ -156,7 +151,6 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         case rank:
@@ -172,11 +166,9 @@ extern void _t_decision_tree(d_tree_t * dt, stats_t * st, int dec)
                 dt->left = next;
                 dt = dt->left;
             }
-            // printf("%lf\n", dt->result);
             break;
 
         default:
-            // printf("DEFAULT\n");
             return;
     }
 

@@ -6,10 +6,11 @@ from backend.outcome_checker import checkOutcome as cO
 from backend.twitter_poster import top3picks as t3p
 from backend import ExceptionsMLB
 from backend import runner
+from backend.predictor.innings_predictor import innings_to_db
 import sys
 import sqlite3
 
-KEY = "secert_key"
+KEY = "secert_key" # Currently unused, but will be used for user APIs, not in this file though
 
 # files to execute if necessary
 PREDICTOR_FILES = [
@@ -56,11 +57,11 @@ def get_games():
             
             return jsonify(getGameDay.get_games()), 200
         
-        except ExceptionsMLB.TableExists as te:
+        except ExceptionsMLB.TableExists:
             print(ExceptionsMLB.ExceptionsMLB.table_exists_msg)
             return jsonify({"error": "No games for day!"})
         
-        except AttributeError as ae:
+        except AttributeError:
             return jsonify({"error": "System error"}), 404
     
 # Get games for certain date
@@ -72,7 +73,7 @@ def get_games_date(date):
         games = getGameDay.get_games(date)
         return jsonify(getGameDay.get_games(date)), 200
     
-    except ExceptionsMLB.TableNotExists as e:
+    except ExceptionsMLB.TableNotExists:
         try:
             getGameDay.createGamedayTable(date=date)
             getGameDay.createPitcherTable(date=date)
@@ -81,11 +82,11 @@ def get_games_date(date):
 
             return jsonify(getGameDay.get_games(date=date)), 200
         
-        except ExceptionsMLB.TableExists as te:
+        except ExceptionsMLB.TableExists:
             print(ExceptionsMLB.ExceptionsMLB.table_exists_msg)
             return jsonify({"error": "No games for day!"}), 304
 
-        except AttributeError as ae:
+        except AttributeError:
             return jsonify({"error": "System error"}), 404
 
 # Predict games from api endpoint
@@ -170,6 +171,15 @@ def get_top_picks(date : str):
 
     except ExceptionsMLB.TableNotExists:
         return jsonify({"error": "No data for day..."}), 304
+
+# Returns NO run 1st innings picks
+def get_innings_picks_date(date : str):
+    try:
+        innings_to_db(date)
+        return jsonify(innings_to_db.db_to_innings(date)), 204
+
+    except ExceptionsMLB.TableExists:
+        return jsonify({"error": "outcomes exist already"}), 304
     
 # TEST
 def post_picks(key : str):

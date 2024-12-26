@@ -551,11 +551,10 @@ int getMssP() {
     }
 
     int idx = 0;
-    for (int i = 1; i < 9; i++) {
-        if (mssArr[i] > mssArr[idx]) {
+    for (int i = 1; i < 9; i++) 
+        if (mssArr[i] > mssArr[idx]) 
             idx = i;
-        }
-    }
+    
     return idx;
 }
 
@@ -723,39 +722,39 @@ static int callback_sig(void * data, int argc, char ** argv, char ** azColName) 
                 tmp_p->back = tmp_back;
             }
             tmp_p->wins = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_loss") == 0) {
+        } else if (strcmp(azColName[i], "pitcher_loss") == 0)
             tmp_p->loss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_era") == 0) {
+        else if (strcmp(azColName[i], "pitcher_era") == 0)
             tmp_p->era = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_inningspitched") == 0) {
+        else if (strcmp(azColName[i], "pitcher_inningspitched") == 0) 
             tmp_p->innnings = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_strikeouts") == 0) {
+        else if (strcmp(azColName[i], "pitcher_strikeouts") == 0) 
             tmp_p->strikeouts = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_baseonballs") == 0) {
+        else if (strcmp(azColName[i], "pitcher_baseonballs") == 0)
             tmp_p->baseonballs = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_hits") == 0) {
+        else if (strcmp(azColName[i], "pitcher_hits") == 0) 
             tmp_p->hits = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_homeruns") == 0) {
+        else if (strcmp(azColName[i], "pitcher_homeruns") == 0) 
             tmp_p->homeruns = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_pct") == 0) {
+        else if (strcmp(azColName[i], "pitcher_pct") == 0) 
             tmp_p->pct = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "picked_team_mss") == 0) {
+        else if (strcmp(azColName[i], "picked_team_mss") == 0) 
             tmp_t->picked_mss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "picked_team_mss_count") == 0) {
+        else if (strcmp(azColName[i], "picked_team_mss_count") == 0) 
             tmp_t->picked_mss_count = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "picked_pitcher_mss") == 0) {
+        else if (strcmp(azColName[i], "picked_pitcher_mss") == 0) 
             tmp_p->picked_mss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "picked_pitcher_mss_count") == 0) {
+        else if (strcmp(azColName[i], "picked_pitcher_mss_count") == 0) 
             tmp_p->picked_mss_count = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "wrong_team_mss") == 0) {
+        else if (strcmp(azColName[i], "wrong_team_mss") == 0) 
             tmp_t->wrong_mss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "wrong_team_mss_count") == 0) {
+        else if (strcmp(azColName[i], "wrong_team_mss_count") == 0) 
             tmp_t->wrong_mss_count = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "wrong_pitcher_mss") == 0) {
+        else if (strcmp(azColName[i], "wrong_pitcher_mss") == 0) 
             tmp_p->wrong_mss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "wrong_pitcher_mss_count") == 0) {
+        else if (strcmp(azColName[i], "wrong_pitcher_mss_count") == 0) 
             tmp_p->wrong_mss_count = atoi(argv[i]);
-        }
+
         ssT_list = tmp_t;
         ssP_list = tmp_p;
     }
@@ -772,48 +771,48 @@ static int callback(void * data, int argc, char ** argv, char ** azColName) {
             game[gamecount].game_id = atoi(argv[i]);
             game[gamecount].home = malloc(sizeof(Team));
             game[gamecount].away = malloc(sizeof(Team));
-        } else if (strcmp(azColName[i], "home_team") == 0) {
+        } else if (strcmp(azColName[i], "home_team") == 0)
             game[gamecount].home->name = strdup(argv[i]);
-        } else if (strcmp(azColName[i], "away_team") == 0) {
+        else if (strcmp(azColName[i], "away_team") == 0)
             game[gamecount].away->name = strdup(argv[i]);
-        } else if (strcmp(azColName[i], "home_wins") == 0) {
+        else if (strcmp(azColName[i], "home_wins") == 0)
             game[gamecount].home->wins = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "away_wins") == 0) {
+        else if (strcmp(azColName[i], "away_wins") == 0)
             game[gamecount].away->wins = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "home_loss") == 0) {
+        else if (strcmp(azColName[i], "home_loss") == 0)
             game[gamecount].home->loss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "away_loss") == 0) {
+        else if (strcmp(azColName[i], "away_loss") == 0) 
             game[gamecount].away->loss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "home_div_leader") == 0) {
+        else if (strcmp(azColName[i], "home_div_leader") == 0) 
             game[gamecount].home->isDivLeader = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "away_div_leader") == 0) {
+        else if (strcmp(azColName[i], "away_div_leader") == 0) 
             game[gamecount].away->isDivLeader = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "same_div") == 0) {
+        else if (strcmp(azColName[i], "same_div") == 0) 
             game[gamecount].sameDiv = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "home_pitcher_id") == 0) {
+        else if (strcmp(azColName[i], "home_pitcher_id") == 0) 
             game[gamecount].home->pitcherID = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "away_pitcher_id") == 0) {
+        else if (strcmp(azColName[i], "away_pitcher_id") == 0)
             game[gamecount++].away->pitcherID = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "pitcher_id") == 0) {
+        else if (strcmp(azColName[i], "pitcher_id") == 0) 
             pitcher[pitchercount].pitcherID = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "wins") == 0) {
+        else if (strcmp(azColName[i], "wins") == 0) 
             pitcher[pitchercount].wins = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "losses") == 0) {
+        else if (strcmp(azColName[i], "losses") == 0) 
             pitcher[pitchercount].loss = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "era") == 0) {
+        else if (strcmp(azColName[i], "era") == 0)
             pitcher[pitchercount].era = atof(argv[i]);
-        } else if (strcmp(azColName[i], "inningspitched") == 0) {
+        else if (strcmp(azColName[i], "inningspitched") == 0)
             pitcher[pitchercount].inningspitched = atof(argv[i]);
-        } else if (strcmp(azColName[i], "strikeouts") == 0) {
+        else if (strcmp(azColName[i], "strikeouts") == 0) 
             pitcher[pitchercount].strikeouts = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "basoneballs") == 0) {
+        else if (strcmp(azColName[i], "basoneballs") == 0) 
             pitcher[pitchercount].baseonballs = atof(argv[i]);
-        } else if (strcmp(azColName[i], "hits") == 0) {
+        else if (strcmp(azColName[i], "hits") == 0) 
             pitcher[pitchercount].hits = atoi(argv[i]);
-        } else if (strcmp(azColName[i], "homeruns") == 0) {
+        else if (strcmp(azColName[i], "homeruns") == 0) 
             pitcher[pitchercount++].homeruns = atoi(argv[i]);
-        }
     }
+
     return 0;
 }
 
@@ -846,9 +845,8 @@ void freeSig_pAllocated(SigStats_p * p) {
 
 // print best picks
 void printBestTeams(Team * bestT, double * percents, double * diffs) {
-    for (int i = 0; i < gamecount; i++) {
+    for (int i = 0; i < gamecount; i++)
         printf("PICK FOR %s @ %s - - - %s %.2f%% - DIFF IN PROBAILITY %.2f%%\n", game[i].away->name, game[i].home->name, bestT[i].name, percents[i], diffs[i]);
-    }
 }
 
 // query picks table in DB
@@ -885,9 +883,8 @@ _Bool table_exists(sqlite3 *db, const char *table_name) {
         return 0;
     }
 
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
+    if (sqlite3_step(stmt) == SQLITE_ROW)
         exists = 1;  // Table exists
-    }
 
     sqlite3_finalize(stmt);
 
@@ -904,9 +901,8 @@ int main(int argc, char * argv[]) {
 
 
     rc = sqlite3_open("data/lamp.db", &db); // open database
-    if (rc) {
+    if (rc) 
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
-    }
 
     // check if table already exists, if does exit program
     char table[MAX] = "picks_";
@@ -953,9 +949,8 @@ int main(int argc, char * argv[]) {
        **** TESTING **** */
 
 
-    for (int i = 0; i < pitchercount; i++) {
+    for (int i = 0; i < pitchercount; i++)
         searchForPitcher(&pitcher[i]);
-    }
 
 
     /* START SIGNIFICANT STAT TABLE SEARCH */

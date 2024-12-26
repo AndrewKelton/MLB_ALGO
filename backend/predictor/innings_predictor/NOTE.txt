@@ -1,0 +1,4 @@
+** NOTE **
+
+Files: log_regression.*, matrix_comp.*, multi_regression.*, and linear_regression.*,
+ARE test files and are NOT used. They do not complete specified tasks and are kept as reference.
