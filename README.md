@@ -157,6 +157,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
+* Currently working on finishing up the 1st inning score prediction
+* The website will be live before the 2025 MLB Season
+
 See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
