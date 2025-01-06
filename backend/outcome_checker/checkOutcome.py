@@ -153,17 +153,6 @@ HERE
 
 '''
 
-# Decision Tree Algorithm (TO BE IMPLEMENTED PERHAPS IN C INSTEAD)
-def decisionTree(game_id, pick, correct):
-    total = 0
-
-    if correct == 0:
-        return 0
-    else:
-        total += 1
-        team_stats = getTeamStats(game_id)
-        print(team_stats)
-            
 # main
 if __name__ == "__main__":
     createOutcomeTable()

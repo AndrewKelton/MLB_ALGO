@@ -42,7 +42,7 @@ def collect_outcomes(game_ids, picks):
 
     while i < leng:
         i+=1
-        print(f'i: {i}\tleng: {leng}')
+        # print(f'i: {i}\tleng: {leng}')
         # try:
         game = mlb.get_game(game_ids[i])
 #         except TypeError:
@@ -90,13 +90,14 @@ def collect_outcomes(game_ids, picks):
     return wins
 
 # query outcomes into db
-def query_outcomes(game_ids, picks, corrects, date):
+def query_outcomes(game_ids, picks, corrects, date, table_name):
     con, cur = cO.openDB()
 
-    table_name = f"outcomes_{date}"
+    table_name = f'''{table_name}_{date}'''
+    # table_name = f"outcomes_{date}"
 
     try:
-        cur.execute(f'''CREATE TABLE IF NOT EXISTS `outcomes_{date}` (
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS `{table_name}` (
             game_id INTEGER PRIMARY KEY,
             team_abbr TEXT NOT NULL,
             correct INTEGER
@@ -109,7 +110,7 @@ def query_outcomes(game_ids, picks, corrects, date):
             raise ExceptionsMLB.TableExists()
 
         for i in range(len(game_ids)):
-            cur.execute(f"INSERT INTO `outcomes_{date}` (game_id, team_abbr, correct) VALUES (?, ?, ?)", (game_ids[i], picks[i], corrects[i]))
+            cur.execute(f"INSERT INTO `{table_name}` (game_id, team_abbr, correct) VALUES (?, ?, ?)", (game_ids[i], picks[i], corrects[i]))
             con.commit()
     except (ExceptionsMLB.TableExists) as e:
         print(e, file=sys.stderr)

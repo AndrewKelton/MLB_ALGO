@@ -1,4 +1,5 @@
 from backend import ExceptionsMLB
+import link_inning_id as lid
 import sqlite3
 import pandas as pd
 import sys
@@ -91,6 +92,8 @@ if __name__ == '__main__':
     print(df)
 
     rows = df.values.tolist()
+
+    linked = lid.link_id_inning(lid.get_innings_abr(date), lid.remove_ids(lid.get_innings_abr(date), lid.get_game_ids(date)))
     
     for row in rows:
         # row[2] = str(row[2])
