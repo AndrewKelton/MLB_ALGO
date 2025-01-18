@@ -146,9 +146,33 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+**Running React.js**
+- In the terminal in the 'mlb-algo-frontend' folder execute 
+  ```sh 
+  NODE_OPTIONS=--openssl-legacy-provider npm start
+  ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+**Running the backend API**
+- In a new terminal in the 'backend' folder execute 
+  ```sh
+  source venv/bin/activate
+  pip install -r requirements.txt
+  flask run
+  ```
+
+**Using the App**
+- You can now go to your preferred browser and view the website on 'http://localhost:3000', or whatever port you are running the React.js app on.
+
+**Shutting Down**
+- Flask
+  - Ensure you are in the terminal running the Flask app and use <kbd>Ctrl</kbd> + <kbd>C</kbd>
+  -  In the terminal execute
+    ```sh
+    deactivate
+    ```
+- React.js
+  - Ensure you are in the terminal running the React.js app and use <kbd>Ctrl</kbd> + <kbd>C</kbd>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
