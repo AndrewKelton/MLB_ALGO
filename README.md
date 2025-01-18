@@ -41,7 +41,7 @@
     ·
     <a href="https://github.com/AndrewKelton/MLB_ALGO/issues/new?template=bug_report.md">Report Bug</a>
     ·
-    <a href="https://github.com/AndrewKelton/MLB_ALGO/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/AndrewKelton/MLB_ALGO/issues/new?template=feature_request.md">Request Feature</a>
   </p>
 </div>
 
