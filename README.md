@@ -37,7 +37,7 @@
     <a href="https://github.com/AndrewKelton/MLB_ALGO.git"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/AndrewKelton/MLB_ALGO">View Demo</a>
+    <a href="https://github.com/AndrewKelton/MLB_ALGO/issues/4">View Demo</a>
     ·
     <a href="https://github.com/AndrewKelton/MLB_ALGO/issues/new?template=bug_report.md">Report Bug</a>
     ·
