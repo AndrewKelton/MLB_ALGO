@@ -206,7 +206,7 @@ See the [open issues](https://github.com/AndrewKelton/MLB_ALGO/issues) for a ful
 [stars-shield]: https://img.shields.io/github/stars/AndrewKelton/MLB_ALGO.svg?style=for-the-badge
 [stars-url]: https://github.com/AndrewKelton/MLB_ALGO/stargazers
 [issues-shield]: https://img.shields.io/github/issues/AndrewKelton/MLB_ALGO.svg?style=for-the-badge
-[issues-url]: https://github.com/AndrewKelton/MLB_ALGO/issues
+[issues-url]:https://github.com/AndrewKelton/MLB_ALGO/issues/4
 [license-shield]: https://img.shields.io/github/license/AndrewKelton/MLB_ALGO.svg?style=for-the-badge
 [license-url]: https://github.com/AndrewKelton/MLB_ALGO/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
